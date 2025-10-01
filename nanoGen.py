@@ -2,6 +2,7 @@
 import ROOT
 import os
 import sys
+import math
 from histogram_definitions import histogram_defs
 ROOT.gROOT.SetBatch(True)
 ###############################################################################################################
@@ -126,6 +127,8 @@ def process_event(entry, histograms):
     top_E      =       float('nan')
     antitop_E  =       float('nan')
     beta       =       float('nan')
+    deltaAbsY  =       float('nan')
+    hypTan_deltaAbsY = float('nan')
 
     ## (leptonic-top scenario) spin-analyzer direction vectors ##
     #############################################################
@@ -149,6 +152,15 @@ def process_event(entry, histograms):
     r_axis = ROOT.TVector3()
     n_axis = ROOT.TVector3()
 
+    # top quark reference axes
+    k_top = ROOT.TVector3()
+    r_top = ROOT.TVector3()
+    n_top = ROOT.TVector3()
+    # antitop quark reference axes
+    k_antitop = ROOT.TVector3()
+    r_antitop = ROOT.TVector3()
+    n_antitop = ROOT.TVector3()
+
     # lepton exclusive polarization variables
     cos_theta1k_antilepton = float('nan')
     cos_theta1r_antilepton = float('nan')
@@ -156,6 +168,11 @@ def process_event(entry, histograms):
     cos_theta2k_lepton = float('nan')
     cos_theta2r_lepton = float('nan')
     cos_theta2n_lepton = float('nan')
+    # CA polarization
+    cos_theta1kStar_antilepton = float('nan')
+    cos_theta1rStar_antilepton = float('nan')
+    cos_theta2kStar_lepton =     float('nan')
+    cos_theta2rStar_lepton =     float('nan')
     
     # Spin correlation variables using lepton and b-quarks
     lb_cHel =     float('nan')
@@ -166,6 +183,11 @@ def process_event(entry, histograms):
     lb_cos_theta2k = float('nan')
     lb_cos_theta2r = float('nan')
     lb_cos_theta2n = float('nan')
+    # CA polarization
+    lb_cos_theta1kStar = float('nan')
+    lb_cos_theta1rStar = float('nan')
+    lb_cos_theta2kStar = float('nan')
+    lb_cos_theta2rStar = float('nan')
     lb_Cnn = float('nan')
     lb_Cnr = float('nan')
     lb_Cnk = float('nan')
@@ -185,6 +207,11 @@ def process_event(entry, histograms):
     ld_cos_theta2k = float('nan')
     ld_cos_theta2r = float('nan')
     ld_cos_theta2n = float('nan')
+    # CA polarization
+    ld_cos_theta1kStar = float('nan')
+    ld_cos_theta1rStar = float('nan')
+    ld_cos_theta2kStar = float('nan')
+    ld_cos_theta2rStar = float('nan')
     ld_Cnn = float('nan')
     ld_Cnr = float('nan')
     ld_Cnk = float('nan')
@@ -216,12 +243,19 @@ def process_event(entry, histograms):
                 antitop_4vec.SetPtEtaPhiM(entry.GenPart_pt[i], entry.GenPart_eta[i], entry.GenPart_phi[i], entry.GenPart_mass[i])
                 antitops.append((antitop_4vec, antitop_idx))
                 antitop_E = antitop_4vec.E()
+
     # Compute and plot ttbar system quantities while still in the LAB FRAME
     ttbar_4vec = top_4vec + antitop_4vec
     m_tt = ttbar_4vec.M()
     beta = abs((top_4vec.Pz() + antitop_4vec.Pz()) / (top_E + antitop_E))
     histograms['h_invariantMass'].Fill(m_tt)
     histograms['h_beta'].Fill(beta)
+
+    # Charge Asymmetry
+    deltaAbsY = abs(top_4vec.Rapidity()) - abs(antitop_4vec.Rapidity())
+    hypTan_deltaAbsY = ROOT.TMath.TanH(deltaAbsY)
+    histograms['h_deltaAbsY'].Fill(deltaAbsY)
+    histograms['h_hypTan_deltaAbsY'].Fill(hypTan_deltaAbsY)
 
     # Find bottom quarks from top or anti-top quark decay
     for j in range(entry.nGenPart):
@@ -321,9 +355,9 @@ def process_event(entry, histograms):
         hadronic_bottom_quarks.append((hadronic_bottom_quark_4vec, bottom_idx))
 
 
-    ####################################
-    ### Fill histograms in LAB FRAME ###
-    ####################################
+    ##############################################
+    ### Fill kinematic histograms in LAB FRAME ###
+    ##############################################
     # top quark histograms
     for top_4vec, top_idx in tops:
         histograms['h_topPt'].Fill(top_4vec.Pt())
@@ -427,14 +461,32 @@ def process_event(entry, histograms):
     ###############################
     ### build Bernreuther basis ###
     ###############################
-    k_axis = top_4vec.Vect().Unit()  # direction of top quark in ttbar rest frame
-    scattering_angle = k_axis.Angle(p_axis)  # angle between top quark direction and proton beam direction
+    k_axis = top_4vec.Vect().Unit()                        # direction of top quark in ttbar rest frame
+    scattering_angle = k_axis.Angle(p_axis)                # angle between top quark direction and proton beam direction
     histograms['h_scattering_angle'].Fill(scattering_angle)
-    sine_scattering_angle = ROOT.TMath.Sin(scattering_angle)
-    cosine_scattering_angle = ROOT.TMath.Cos(scattering_angle)
-    axis_coeff = (1.0 if cosine_scattering_angle >= 0 else -1.0) / sine_scattering_angle
-    r_axis = axis_coeff * (p_axis - (k_axis * cosine_scattering_angle))  # orthogonal to k_axis and p_axis
-    n_axis = axis_coeff * p_axis.Cross(k_axis)                           # orthogonal to both p_axis and k_axis
+    mag_sinTSA = abs(ROOT.TMath.Sin(scattering_angle))     # magnitude of sin(Top_Scattering_Angle)
+    cosTSA = ROOT.TMath.Cos(scattering_angle)              # cos(Top_Scattering_Angle)
+    r_axis = (1/mag_sinTSA) * (p_axis - (cosTSA * k_axis)) # orthogonal to k_axis and lies in production plane
+    n_axis = (1/mag_sinTSA) * p_axis.Cross(k_axis)         # orthogonal to production plane
+
+    ### top quark reference axes ###
+    ################################
+    k_top = k_axis
+    r_top = (1.0 if cosTSA >= 0 else -1.0) * r_axis
+    n_top = (1.0 if cosTSA >= 0 else -1.0) * n_axis
+    ### CA-polarization axes
+    kStar_top = (1.0 if deltaAbsY >= 0 else -1.0) * k_axis
+    rStar_top = (1.0 if deltaAbsY >= 0 else -1.0) * (1.0 if cosTSA >= 0 else -1.0) * r_axis
+
+    ### antitop quark reference axes ###
+    ####################################
+    k_antitop = -1.0 * k_axis
+    r_antitop = -1.0 * (1.0 if cosTSA >= 0 else -1.0) * r_axis
+    n_antitop = -1.0 * (1.0 if cosTSA >= 0 else -1.0) * n_axis
+    ### CA-polarization axes
+    kStar_antitop = -1.0 * (1.0 if deltaAbsY >= 0 else -1.0) * k_axis
+    rStar_antitop = -1.0 * (1.0 if deltaAbsY >= 0 else -1.0) * (1.0 if cosTSA >= 0 else -1.0) * r_axis
+
 
     ### Boost decay products to their motherTop's REST FRAME ###
     ############################################################
@@ -465,13 +517,17 @@ def process_event(entry, histograms):
     ##################################
     # lepton exclusive polarization variables
     if has_hadronic_antiTop_decay:
-        cos_theta1k_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_axis))
-        cos_theta1r_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_axis))
-        cos_theta1n_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_axis))
+        cos_theta1k_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_top))
+        cos_theta1r_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_top))
+        cos_theta1n_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_top))
+        cos_theta1kStar_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(kStar_top))
+        cos_theta1rStar_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(rStar_top))
     elif has_hadronic_top_decay:
-        cos_theta2k_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_axis))
-        cos_theta2r_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_axis))
-        cos_theta2n_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_axis))
+        cos_theta2k_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_antitop))
+        cos_theta2r_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_antitop))
+        cos_theta2n_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_antitop))
+        cos_theta2kStar_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(kStar_antitop))
+        cos_theta2rStar_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(rStar_antitop))
 
     # Using leptons and (b- OR d-quarks) as spin analyzers
     ### leptonic-top scenario ###
@@ -479,19 +535,28 @@ def process_event(entry, histograms):
         ### Polarizations coefficients ###
         ##################################
         # top quark decay product
-        lb_cos_theta1k = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_axis))
-        lb_cos_theta1r = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_axis))
-        lb_cos_theta1n = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_axis))
-        ld_cos_theta1k = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_axis))
-        ld_cos_theta1r = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_axis))
-        ld_cos_theta1n = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_axis))
+        lb_cos_theta1k = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_top))
+        lb_cos_theta1r = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_top))
+        lb_cos_theta1n = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_top))
+        lb_cos_theta1kStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(kStar_top))
+        lb_cos_theta1rStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(rStar_top))
+        ld_cos_theta1k = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_top))
+        ld_cos_theta1r = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_top))
+        ld_cos_theta1n = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_top))
+        ld_cos_theta1kStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(kStar_top))
+        ld_cos_theta1rStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(rStar_top))
         # top antiquark decay products
-        lb_cos_theta2k = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(k_axis))
-        lb_cos_theta2r = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(r_axis))
-        lb_cos_theta2n = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(n_axis))
-        ld_cos_theta2k = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(k_axis))
-        ld_cos_theta2r = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(r_axis))
-        ld_cos_theta2n = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(n_axis))
+        lb_cos_theta2k = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(k_antitop))
+        lb_cos_theta2r = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(r_antitop))
+        lb_cos_theta2n = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(n_antitop))
+        lb_cos_theta2kStar = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(kStar_antitop))
+        lb_cos_theta2rStar = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(rStar_antitop))
+        ld_cos_theta2k = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(k_antitop))
+        ld_cos_theta2r = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(r_antitop))
+        ld_cos_theta2n = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(n_antitop))
+        ld_cos_theta2kStar = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(kStar_antitop))
+        ld_cos_theta2rStar = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(rStar_antitop))
+
         ### Entanglement variables ###
         ##############################
         lb_cHel =    ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(mRF_hadronic_antibottom_quark_dir))
@@ -504,19 +569,27 @@ def process_event(entry, histograms):
         ### Polarizations coefficients ###
         ##################################
         # top quark decay products
-        lb_cos_theta1k = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(k_axis))
-        lb_cos_theta1r = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(r_axis))
-        lb_cos_theta1n = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(n_axis))
-        ld_cos_theta1k = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(k_axis))
-        ld_cos_theta1r = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(r_axis))
-        ld_cos_theta1n = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(n_axis))
+        lb_cos_theta1k = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(k_antitop))
+        lb_cos_theta1r = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(r_antitop))
+        lb_cos_theta1n = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(n_antitop))
+        lb_cos_theta1kStar = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(kStar_antitop))
+        lb_cos_theta1rStar = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(rStar_antitop))
+        ld_cos_theta1k = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(k_antitop))
+        ld_cos_theta1r = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(r_antitop))
+        ld_cos_theta1n = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(n_antitop))
+        ld_cos_theta1kStar = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(kStar_antitop))
+        ld_cos_theta1rStar = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(rStar_antitop))
         # top antiquark decay products
-        lb_cos_theta2k = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_axis))
-        lb_cos_theta2r = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_axis))
-        lb_cos_theta2n = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_axis))
-        ld_cos_theta2k = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_axis))
-        ld_cos_theta2r = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_axis))
-        ld_cos_theta2n = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_axis))
+        lb_cos_theta2k = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_top))
+        lb_cos_theta2r = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_top))
+        lb_cos_theta2n = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_top))
+        lb_cos_theta2kStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(kStar_top))
+        lb_cos_theta2rStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(rStar_top))
+        ld_cos_theta2k = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_top))
+        ld_cos_theta2r = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_top))
+        ld_cos_theta2n = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_top))
+        ld_cos_theta2kStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(kStar_top))
+        ld_cos_theta2rStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(rStar_top))
         ### Entanglement variables ###
         ##############################
         lb_cHel = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(mRF_lepton_4vec_dir))
@@ -556,6 +629,10 @@ def process_event(entry, histograms):
     histograms['h_cos_theta2k_lepton'].Fill(cos_theta2k_lepton)
     histograms['h_cos_theta2r_lepton'].Fill(cos_theta2r_lepton)
     histograms['h_cos_theta2n_lepton'].Fill(cos_theta2n_lepton)
+    histograms['h_cos_theta1kStar_antilepton'].Fill(cos_theta1kStar_antilepton)
+    histograms['h_cos_theta1rStar_antilepton'].Fill(cos_theta1rStar_antilepton)
+    histograms['h_cos_theta2kStar_lepton'].Fill(cos_theta2kStar_lepton)
+    histograms['h_cos_theta2rStar_lepton'].Fill(cos_theta2rStar_lepton)
     # Spin correlation variables
     histograms['h_lb_cHel'].Fill(lb_cHel)
     histograms['h_lb_cHel_P3n'].Fill(lb_cHel_P3n)
@@ -568,12 +645,20 @@ def process_event(entry, histograms):
     histograms['h_lb_cos_theta2k'].Fill(lb_cos_theta2k)
     histograms['h_lb_cos_theta2r'].Fill(lb_cos_theta2r)
     histograms['h_lb_cos_theta2n'].Fill(lb_cos_theta2n)
+    histograms['h_lb_cos_theta1kStar'].Fill(lb_cos_theta1kStar)
+    histograms['h_lb_cos_theta1rStar'].Fill(lb_cos_theta1rStar)
+    histograms['h_lb_cos_theta2kStar'].Fill(lb_cos_theta2kStar)
+    histograms['h_lb_cos_theta2rStar'].Fill(lb_cos_theta2rStar)
     histograms['h_ld_cos_theta1k'].Fill(ld_cos_theta1k)
     histograms['h_ld_cos_theta1r'].Fill(ld_cos_theta1r)
     histograms['h_ld_cos_theta1n'].Fill(ld_cos_theta1n)
     histograms['h_ld_cos_theta2k'].Fill(ld_cos_theta2k)
     histograms['h_ld_cos_theta2r'].Fill(ld_cos_theta2r)
     histograms['h_ld_cos_theta2n'].Fill(ld_cos_theta2n)
+    histograms['h_ld_cos_theta1kStar'].Fill(ld_cos_theta1kStar)
+    histograms['h_ld_cos_theta1rStar'].Fill(ld_cos_theta1rStar)
+    histograms['h_ld_cos_theta2kStar'].Fill(ld_cos_theta2kStar)
+    histograms['h_ld_cos_theta2rStar'].Fill(ld_cos_theta2rStar)
     # Correlation Matrix elements
     histograms['h_lb_Cnn'].Fill(lb_Cnn)
     histograms['h_lb_Cnr'].Fill(lb_Cnr)

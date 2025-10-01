@@ -5,8 +5,9 @@ import ROOT
 ###                     e.g. entanglement_nanoGen.py                       ###
 ##############################################################################
 
-# ROOT histogram initialization syntax is:
-# h_name = ROOT.TH1F("h_name", "Title;x-axis;y-axis", nbins, xlow, xup)
+# ROOT histogram initialization syntax:
+# h_name = ROOT.TH1F("h_name", "Title;x-axis label;y-axis label", nbins, xlow, xup)
+# (note the semicolon separated single string "Title;x-axis label;y-axis label")
 
 ##########################
 ### Particle kinematics###
@@ -23,6 +24,8 @@ h_antitopMass = ROOT.TH1F("h_antitopMass", "antiTop Quark Mass;M (GeV);Events", 
 h_invariantMass = ROOT.TH1F("h_invariantMass", "ttbar Invariant Mass;M (GeV);Events", 9940, 300, 50000)
 h_scattering_angle = ROOT.TH1F("h_scattering_angle", "Top Scattering Angle;#theta^{*};Events", 12, 0, 3.14)
 h_beta = ROOT.TH1F("h_beta", "ttbar System Velocity;#beta;Events", 50, 0, 1)
+h_deltaAbsY = ROOT.TH1F("h_deltaAbsY", "#Delta|y| = |y_{t}| - |y_{#bar{t}}|;#Delta|y|;Events", 6, -5, 5)
+h_hypTan_deltaAbsY = ROOT.TH1F("h_hypTan_deltaAbsY", "hyperbolic_tangent(#Delta|y|);tanh(#Delta|y|);Events", 6, -1, 1)
 # Bottom quarks
 h_bquark_pt = ROOT.TH1F("h_bquark_pt", "b-quark p_{T};p_{T} (GeV);Events", 150, 0, 500)
 h_bquark_eta = ROOT.TH1F("h_bquark_eta", "b-quark #eta;#eta;Events", 50, -5, 5)
@@ -76,12 +79,17 @@ h_antiDtype_quark_phi = ROOT.TH1F("h_antiDtype_quark_phi", "anti-d-type quark #p
 ### Spin correlation variables ###
 ##################################
 # lepton exclusive polarization variables
-h_cos_theta1k_antilepton = ROOT.TH1F("h_cos_theta1k_antilepton", " ;cos(#theta_{#hat{l}k});Events", 6, -1, 1)
-h_cos_theta1r_antilepton = ROOT.TH1F("h_cos_theta1r_antilepton", " ;cos(#theta_{#hat{l}r});Events", 6, -1, 1)
-h_cos_theta1n_antilepton = ROOT.TH1F("h_cos_theta1n_antilepton", " ;cos(#theta_{#hat{l}n});Events", 6, -1, 1)
-h_cos_theta2k_lepton = ROOT.TH1F("h_cos_theta2k_lepton", " ;cos(#theta_{lk});Events", 6, -1, 1)
-h_cos_theta2r_lepton = ROOT.TH1F("h_cos_theta2r_lepton", " ;cos(#theta_{lr});Events", 6, -1, 1)
-h_cos_theta2n_lepton = ROOT.TH1F("h_cos_theta2n_lepton", " ;cos(#theta_{ln});Events", 6, -1, 1)
+h_cos_theta1k_antilepton = ROOT.TH1F("h_cos_theta1k_antilepton", "antilepton #hat{k}-polarization;cos(#theta_{#hat{l}k});Events", 6, -1, 1)
+h_cos_theta1r_antilepton = ROOT.TH1F("h_cos_theta1r_antilepton", "antilepton #hat{r}-polarization;cos(#theta_{#hat{l}r});Events", 6, -1, 1)
+h_cos_theta1n_antilepton = ROOT.TH1F("h_cos_theta1n_antilepton", "antilepton #hat{n}-polarization;cos(#theta_{#hat{l}n});Events", 6, -1, 1)
+h_cos_theta2k_lepton = ROOT.TH1F("h_cos_theta2k_lepton", "lepton #hat{k}-polarization;cos(#theta_{lk});Events", 6, -1, 1)
+h_cos_theta2r_lepton = ROOT.TH1F("h_cos_theta2r_lepton", "lepton #hat{r}-polarization;cos(#theta_{lr});Events", 6, -1, 1)
+h_cos_theta2n_lepton = ROOT.TH1F("h_cos_theta2n_lepton", "lepton #hat{n}-polarization;cos(#theta_{ln});Events", 6, -1, 1)
+# CA polarizations
+h_cos_theta1kStar_antilepton = ROOT.TH1F("h_cos_theta1kStar_antilepton", "antilepton #hat{k*}-polarization ;cos(#theta_{#hat{l}k*});Events", 6, -1, 1)
+h_cos_theta1rStar_antilepton = ROOT.TH1F("h_cos_theta1rStar_antilepton", "antilepton #hat{r*}-polarization ;cos(#theta_{#hat{l}r*});Events", 6, -1, 1)
+h_cos_theta2kStar_lepton = ROOT.TH1F("h_cos_theta2kStar_lepton", "lepton #hat{k*}-polarization ;cos(#theta_{lk*});Events", 6, -1, 1)
+h_cos_theta2rStar_lepton = ROOT.TH1F("h_cos_theta2rStar_lepton", "lepton #hat{r*}-polarization ;cos(#theta_{lr*});Events", 6, -1, 1)
 
 ### Using LEPTONS and B_QUARKS as spin analyzers ###
 ####################################################
@@ -93,12 +101,18 @@ h_lb_cHel_P3n_slow = ROOT.TH1F("h_lb_cHel_P3n_slow", "(lb) Cosine Helicity Angle
 h_lb_cHel_BoostedCentral    = ROOT.TH1F("h_lb_cHel_BoostedCentral", "(lb) Cosine Helicity Angle m_{tt}>800 GeV & |cos(#theta^{*})|<0.6;cos(#theta_{lb});Events", 6, -1, 1)
 h_lb_cHel_P3n_BoostedCentral = ROOT.TH1F("h_lb_cHel_P3n_BoostedCentral", "(lb) Cosine Helicity Angle w/P_3n m_{tt}>800 GeV & |cos(#theta^{*})|<0.6;cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 # Polarization 
-h_lb_cos_theta1k = ROOT.TH1F("h_lb_cos_theta1k", " ;(lb) cos(#theta_{1k});Events", 6, -1, 1)
-h_lb_cos_theta1r = ROOT.TH1F("h_lb_cos_theta1r", " ;(lb) cos(#theta_{1r});Events", 6, -1, 1)
-h_lb_cos_theta1n = ROOT.TH1F("h_lb_cos_theta1n", " ;(lb) cos(#theta_{1n});Events", 6, -1, 1)
-h_lb_cos_theta2k = ROOT.TH1F("h_lb_cos_theta2k", " ;(lb) cos(#theta_{2k});Events", 6, -1, 1)
-h_lb_cos_theta2r = ROOT.TH1F("h_lb_cos_theta2r", " ;(lb) cos(#theta_{2r});Events", 6, -1, 1)
-h_lb_cos_theta2n = ROOT.TH1F("h_lb_cos_theta2n", " ;(lb) cos(#theta_{2n});Events", 6, -1, 1)
+h_lb_cos_theta1k = ROOT.TH1F("h_lb_cos_theta1k", "top decay (lb) #hat{k}-polarization;(lb) cos(#theta_{1k});Events", 6, -1, 1)
+h_lb_cos_theta1r = ROOT.TH1F("h_lb_cos_theta1r", "top decay (lb) #hat{r}-polarization ;(lb) cos(#theta_{1r});Events", 6, -1, 1)
+h_lb_cos_theta1n = ROOT.TH1F("h_lb_cos_theta1n", "top decay (lb) #hat{n}-polarization ;(lb) cos(#theta_{1n});Events", 6, -1, 1)
+h_lb_cos_theta2k = ROOT.TH1F("h_lb_cos_theta2k", "antitop decay (lb) #hat{k}-polarization ;(lb) cos(#theta_{2k});Events", 6, -1, 1)
+h_lb_cos_theta2r = ROOT.TH1F("h_lb_cos_theta2r", "antitop decay (lb) #hat{r}-polarization ;(lb) cos(#theta_{2r});Events", 6, -1, 1)
+h_lb_cos_theta2n = ROOT.TH1F("h_lb_cos_theta2n", "antitop decay (lb) #hat{n}-polarization ;(lb) cos(#theta_{2n});Events", 6, -1, 1)
+# CA polarizations
+h_lb_cos_theta1kStar = ROOT.TH1F("h_lb_cos_theta1kStar", "top decay (lb) #hat{k*}-polarization;(lb) cos(#theta_{1k*});Events", 6, -1, 1)
+h_lb_cos_theta1rStar = ROOT.TH1F("h_lb_cos_theta1rStar", "top decay (lb) #hat{r*}-polarization ;(lb) cos(#theta_{1r*});Events", 6, -1, 1)
+h_lb_cos_theta2kStar = ROOT.TH1F("h_lb_cos_theta2kStar", "antitop decay (lb) #hat{k*}-polarization ;(lb) cos(#theta_{2k*});Events", 6, -1, 1)
+h_lb_cos_theta2rStar = ROOT.TH1F("h_lb_cos_theta2rStar", "antitop decay (lb) #hat{r*}-polarization ;(lb) cos(#theta_{2r*});Events", 6, -1, 1)
+
 # Correlation Matrix elements
 h_lb_Cnn = ROOT.TH1F("h_lb_Cnn", "(lb) C_{nn};C_{nn};Events", 6, -1, 1)
 h_lb_Cnr = ROOT.TH1F("h_lb_Cnr", "(lb) C_{nr};C_{nr};Events", 6, -1, 1)
@@ -138,12 +152,17 @@ h_ld_cHel_P3n_slow = ROOT.TH1F("h_ld_cHel_P3n_slow", "(ld) Cosine Helicity Angle
 h_ld_cHel_BoostedCentral    = ROOT.TH1F("h_ld_cHel_BoostedCentral", "(ld) Cosine Helicity Angle m_{tt}>800 GeV & |cos(#theta^{*})|<0.6;cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_BoostedCentral = ROOT.TH1F("h_ld_cHel_P3n_BoostedCentral", "(ld) Cosine Helicity Angle w/P_3n m_{tt}>800 GeV & |cos(#theta^{*})|<0.6;cos(#theta_{l(P_{3}d});Events", 6, -1, 1)
 # Polarization
-h_ld_cos_theta1k = ROOT.TH1F("h_ld_cos_theta1k", " ;(ld) cos(#theta_{1k});Events", 6, -1, 1)
-h_ld_cos_theta1r = ROOT.TH1F("h_ld_cos_theta1r", " ;(ld) cos(#theta_{1r});Events", 6, -1, 1)
-h_ld_cos_theta1n = ROOT.TH1F("h_ld_cos_theta1n", " ;(ld) cos(#theta_{1n});Events", 6, -1, 1)
-h_ld_cos_theta2k = ROOT.TH1F("h_ld_cos_theta2k", " ;(ld) cos(#theta_{2k});Events", 6, -1, 1)
-h_ld_cos_theta2r = ROOT.TH1F("h_ld_cos_theta2r", " ;(ld) cos(#theta_{2r});Events", 6, -1, 1)
-h_ld_cos_theta2n = ROOT.TH1F("h_ld_cos_theta2n", " ;(ld) cos(#theta_{2n});Events", 6, -1, 1)
+h_ld_cos_theta1k = ROOT.TH1F("h_ld_cos_theta1k", "top decay (ld) #hat{k}-polarization;(ld) cos(#theta_{1k});Events", 6, -1, 1)
+h_ld_cos_theta1r = ROOT.TH1F("h_ld_cos_theta1r", "top decay (ld) #hat{r}-polarization;(ld) cos(#theta_{1r});Events", 6, -1, 1)
+h_ld_cos_theta1n = ROOT.TH1F("h_ld_cos_theta1n", "top decay (ld) #hat{n}-polarization;(ld) cos(#theta_{1n});Events", 6, -1, 1)
+h_ld_cos_theta2k = ROOT.TH1F("h_ld_cos_theta2k", "antitop decay (ld) #hat{k}-polarization;(ld) cos(#theta_{2k});Events", 6, -1, 1)
+h_ld_cos_theta2r = ROOT.TH1F("h_ld_cos_theta2r", "antitop decay (ld) #hat{r}-polarization;(ld) cos(#theta_{2r});Events", 6, -1, 1)
+h_ld_cos_theta2n = ROOT.TH1F("h_ld_cos_theta2n", "antitop decay (ld) #hat{n}-polarization;(ld) cos(#theta_{2n});Events", 6, -1, 1)
+# CA polarizations
+h_ld_cos_theta1kStar = ROOT.TH1F("h_ld_cos_theta1kStar", "top decay (ld) #hat{k*}-polarization;(ld) cos(#theta_{1k*});Events", 6, -1, 1)
+h_ld_cos_theta1rStar = ROOT.TH1F("h_ld_cos_theta1rStar", "top decay (ld) #hat{r*}-polarization;(ld) cos(#theta_{1r*});Events", 6, -1, 1)
+h_ld_cos_theta2kStar = ROOT.TH1F("h_ld_cos_theta2kStar", "antitop decay (ld) #hat{k*}-polarization;(ld) cos(#theta_{2k*});Events", 6, -1, 1)
+h_ld_cos_theta2rStar = ROOT.TH1F("h_ld_cos_theta2rStar", "antitop decay (ld) #hat{r*}-polarization;(ld) cos(#theta_{2r*});Events", 6, -1, 1)
 # Correlation Matrix elements
 h_ld_Cnn = ROOT.TH1F("h_ld_Cnn", "(ld) C_{nn};C_{nn};Events", 6, -1, 1)
 h_ld_Cnr = ROOT.TH1F("h_ld_Cnr", "(ld) C_{nr};C_{nr};Events", 6, -1, 1)
@@ -190,6 +209,8 @@ histogram_defs = {
     'h_invariantMass': h_invariantMass,
     "h_scattering_angle": h_scattering_angle,
     'h_beta': h_beta,
+    'h_deltaAbsY': h_deltaAbsY,
+    'h_hypTan_deltaAbsY': h_hypTan_deltaAbsY,
     # Bottom quarks
     "h_bquark_pt" : h_bquark_pt,
     "h_bquark_eta": h_bquark_eta,
@@ -249,6 +270,11 @@ histogram_defs = {
     "h_cos_theta2k_lepton": h_cos_theta2k_lepton,
     "h_cos_theta2r_lepton": h_cos_theta2r_lepton,
     "h_cos_theta2n_lepton": h_cos_theta2n_lepton,
+    # CA polarizations
+    "h_cos_theta1kStar_antilepton": h_cos_theta1kStar_antilepton,
+    "h_cos_theta1rStar_antilepton": h_cos_theta1rStar_antilepton,
+    "h_cos_theta2kStar_lepton": h_cos_theta2kStar_lepton,
+    "h_cos_theta2rStar_lepton": h_cos_theta2rStar_lepton,
     
     ### Using LEPTONS and B_QUARKS as spin analyzers ###
     ####################################################
@@ -266,6 +292,11 @@ histogram_defs = {
     "h_lb_cos_theta2k": h_lb_cos_theta2k,
     "h_lb_cos_theta2r": h_lb_cos_theta2r,
     "h_lb_cos_theta2n": h_lb_cos_theta2n,
+    # CA polarizations
+    "h_lb_cos_theta1kStar": h_lb_cos_theta1kStar,
+    "h_lb_cos_theta1rStar": h_lb_cos_theta1rStar,
+    "h_lb_cos_theta2kStar": h_lb_cos_theta2kStar,
+    "h_lb_cos_theta2rStar": h_lb_cos_theta2rStar,
     # Correlation Matrix elements
     "h_lb_Cnn": h_lb_Cnn,
     "h_lb_Cnr": h_lb_Cnr,
@@ -311,6 +342,11 @@ histogram_defs = {
     "h_ld_cos_theta2k": h_ld_cos_theta2k,
     "h_ld_cos_theta2r": h_ld_cos_theta2r,
     "h_ld_cos_theta2n": h_ld_cos_theta2n,
+    # CA polarizations
+    "h_ld_cos_theta1kStar": h_ld_cos_theta1kStar,
+    "h_ld_cos_theta1rStar": h_ld_cos_theta1rStar,
+    "h_ld_cos_theta2kStar": h_ld_cos_theta2kStar,
+    "h_ld_cos_theta2rStar": h_ld_cos_theta2rStar,
     # Correlation Matrix elements
     "h_ld_Cnn": h_ld_Cnn,
     "h_ld_Cnr": h_ld_Cnr,
