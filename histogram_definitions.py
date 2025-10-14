@@ -6,7 +6,7 @@ import ROOT
 ##############################################################################
 
 # ROOT histogram initialization syntax:
-# h_name = ROOT.TH1F("h_name", "Title;x-axis label;y-axis label", nbins, xlow, xup)
+# h_name = ROOT.TH1F("h_name", "Title;x-axis_label;y-axis_label", nbins, xlow, xup)
 # (note the semicolon separated single string "Title;x-axis label;y-axis label")
 
 ##########################
@@ -146,6 +146,13 @@ h_ld_trC      = ROOT.TH1F("h_ld_trC", "Trace of Correlation Matrix;Tr(C);Events"
 h_ld_cHel     = ROOT.TH1F("h_ld_cHel", "(ld) Cosine Helicity Angle;cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n = ROOT.TH1F("h_ld_cHel_P3n", "(ld) Cosine Helicity Angle w/P_3n;cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+### Baumgart&Tweedie variables ###
+##################################
+h_lb_sigmaPhi = ROOT.TH1F("h_lb_sigmaPhi", "(lb) #Sigma#phi_{#hat{n}#hat{r}};#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi = ROOT.TH1F("h_lb_deltaPhi", "(lb) #Delta#phi_{#hat{n}#hat{r}};#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi = ROOT.TH1F("h_ld_sigmaPhi", "(ld) #Sigma#phi_{#hat{n}#hat{r}};#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi = ROOT.TH1F("h_ld_deltaPhi", "(ld) #Delta#phi_{#hat{n}#hat{r}};#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
 
 ### Bins of mttbar ###
 ### mtt [300, 400] GeV ### (include a separate bin with beta<0.9 cut ONLY for lowest mass bin) ###
@@ -206,6 +213,11 @@ h_ld_trC_mtt300to400 = ROOT.TH1F("h_ld_trC_mtt300to400", "Trace of Correlation M
 h_ld_cHel_mtt300to400 = ROOT.TH1F("h_ld_cHel_mtt300to400", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt300to400 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
         # beta < 0.9
 h_cos_theta1n_antilepton_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_beta_lt_0p9", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, #beta<0.9);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt300to400_beta_lt_0p9", "antilepton #hat{r}-polarization (300 < m_{tt} < 400 GeV, #beta<0.9);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -263,6 +275,11 @@ h_ld_Ckk_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_ld_Ckk_mtt300to400_beta_lt_0p9",
 h_ld_trC_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_ld_trC_mtt300to400_beta_lt_0p9", "Trace of Correlation Matrix (300 < m_{tt} < 400 GeV, #beta<0.9);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_mtt300to400_beta_lt_0p9", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, #beta < 0.9);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_beta_lt_0p9", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, #beta < 0.9);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_beta_lt_0p9", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_beta_lt_0p9", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_beta_lt_0p9", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_beta_lt_0p9 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_beta_lt_0p9", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
     ## |cosTSA| < 0.4
 h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -322,6 +339,11 @@ h_ld_trC_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_trC_mtt300to400_cosTSA_lt_0
 h_ld_cHel_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_mtt300to400_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
         # beta < 0.9
 h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "antilepton #hat{r}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -379,6 +401,11 @@ h_ld_Ckk_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_ld_Ckk_mtt300to400
 h_ld_trC_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_ld_trC_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "Trace of Correlation Matrix (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta < 0.9);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.4, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
     ## |cosTSA| < 0.7
 h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -438,6 +465,11 @@ h_ld_trC_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_trC_mtt300to400_cosTSA_lt_0
 h_ld_cHel_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_mtt300to400_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
         # beta < 0.9
 h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "antilepton #hat{r}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -495,6 +527,11 @@ h_ld_Ckk_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_Ckk_mtt300to400
 h_ld_trC_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_trC_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "Trace of Correlation Matrix (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta < 0.9);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|<0.7, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
     ## |cosTSA| > 0.7
 h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -554,6 +591,11 @@ h_ld_trC_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_trC_mtt300to400_cosTSA_gt_0
 h_ld_cHel_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_mtt300to400_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
         # beta < 0.9
 h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "antilepton #hat{n}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "antilepton #hat{r}-polarization (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -612,6 +654,10 @@ h_ld_trC_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_trC_mtt300to400
 h_ld_cHel_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "(ld) Cosine Helicity Angle (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta < 0.9);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "(ld) Cosine Helicity Angle w/P_3n (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "(lb) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9 = ROOT.TH1F("h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9", "(ld) #Delta#phi_{#hat{n}#hat{r}} (300 < m_{tt} < 400 GeV, |cosTSA|>0.7, #beta<0.9);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
 ### mtt [400, 600] GeV
 h_cos_theta1n_antilepton_mtt400to600 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt400to600", "antilepton #hat{n}-polarization (400 < m_{tt} < 600 GeV);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -671,6 +717,11 @@ h_ld_trC_mtt400to600 = ROOT.TH1F("h_ld_trC_mtt400to600", "Trace of Correlation M
 h_ld_cHel_mtt400to600 = ROOT.TH1F("h_ld_cHel_mtt400to600", "(ld) Cosine Helicity Angle (400 < m_{tt} < 600 GeV);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt400to600 = ROOT.TH1F("h_ld_cHel_P3n_mtt400to600", "(ld) Cosine Helicity Angle w/P_3n (400 < m_{tt} < 600 GeV);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt400to600 = ROOT.TH1F("h_lb_sigmaPhi_mtt400to600", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt400to600 = ROOT.TH1F("h_lb_deltaPhi_mtt400to600", "(lb) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt400to600 = ROOT.TH1F("h_ld_sigmaPhi_mtt400to600", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt400to600 = ROOT.TH1F("h_ld_deltaPhi_mtt400to600", "(ld) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
     ## |cosTSA| < 0.4
 h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p4", "antilepton #hat{n}-polarization (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt400to600_cosTSA_lt_0p4", "antilepton #hat{r}-polarization (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -728,6 +779,11 @@ h_ld_Ckk_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_Ckk_mtt400to600_cosTSA_lt_0
 h_ld_trC_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_trC_mtt400to600_cosTSA_lt_0p4", "Trace of Correlation Matrix (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_mtt400to600_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle w/P_3n (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p4", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p4", "(lb) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p4", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p4", "(ld) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
     ## |cosTSA| < 0.7
 h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p7", "antilepton #hat{n}-polarization (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -787,6 +843,11 @@ h_ld_trC_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_trC_mtt400to600_cosTSA_lt_0
 h_ld_cHel_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_mtt400to600_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle w/P_3n (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
     ## |cosTSA| > 0.7
 h_cos_theta1n_antilepton_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt400to600_cosTSA_gt_0p7", "antilepton #hat{n}-polarization (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt400to600_cosTSA_gt_0p7", "antilepton #hat{r}-polarization (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -845,6 +906,10 @@ h_ld_trC_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_trC_mtt400to600_cosTSA_gt_0
 h_ld_cHel_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_mtt400to600_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt400to600_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle w/P_3n (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt400to600_cosTSA_gt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt400to600_cosTSA_gt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt400to600_cosTSA_gt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt400to600_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt400to600_cosTSA_gt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (400 < m_{tt} < 600 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
 ### mtt [600, 800] GeV
 h_cos_theta1n_antilepton_mtt600to800 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt600to800", "antilepton #hat{n}-polarization (600 < m_{tt} < 800 GeV);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -904,6 +969,11 @@ h_ld_trC_mtt600to800 = ROOT.TH1F("h_ld_trC_mtt600to800", "Trace of Correlation M
 h_ld_cHel_mtt600to800 = ROOT.TH1F("h_ld_cHel_mtt600to800", "(ld) Cosine Helicity Angle (600 < m_{tt} < 800 GeV);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt600to800 = ROOT.TH1F("h_ld_cHel_P3n_mtt600to800", "(ld) Cosine Helicity Angle w/P_3n (600 < m_{tt} < 800 GeV);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt600to800 = ROOT.TH1F("h_lb_sigmaPhi_mtt600to800", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt600to800 = ROOT.TH1F("h_lb_deltaPhi_mtt600to800", "(lb) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt600to800 = ROOT.TH1F("h_ld_sigmaPhi_mtt600to800", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt600to800 = ROOT.TH1F("h_ld_deltaPhi_mtt600to800", "(ld) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
     ## |cosTSA| < 0.4
 h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p4", "antilepton #hat{n}-polarization (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt600to800_cosTSA_lt_0p4", "antilepton #hat{r}-polarization (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -961,6 +1031,11 @@ h_ld_Ckk_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_Ckk_mtt600to800_cosTSA_lt_0
 h_ld_trC_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_trC_mtt600to800_cosTSA_lt_0p4", "Trace of Correlation Matrix (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_mtt600to800_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle w/P_3n (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p4", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p4", "(lb) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p4", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p4", "(ld) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
     ## |cosTSA| < 0.7
 h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p7", "antilepton #hat{n}-polarization (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -1020,6 +1095,11 @@ h_ld_trC_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_trC_mtt600to800_cosTSA_lt_0
 h_ld_cHel_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_mtt600to800_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle w/P_3n (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
     ## |cosTSA| > 0.7
 h_cos_theta1n_antilepton_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt600to800_cosTSA_gt_0p7", "antilepton #hat{n}-polarization (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt600to800_cosTSA_gt_0p7", "antilepton #hat{r}-polarization (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -1078,6 +1158,10 @@ h_ld_trC_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_trC_mtt600to800_cosTSA_gt_0
 h_ld_cHel_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_mtt600to800_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt600to800_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle w/P_3n (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt600to800_cosTSA_gt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt600to800_cosTSA_gt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt600to800_cosTSA_gt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt600to800_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt600to800_cosTSA_gt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (600 < m_{tt} < 800 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
 ### mtt [800, Inf] GeV
 h_cos_theta1n_antilepton_mtt800toInf = ROOT.TH1F("h_cos_theta1n_antilepton_mtt800toInf", "antilepton #hat{n}-polarization (m_{tt} > 800 GeV);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -1137,6 +1221,11 @@ h_ld_trC_mtt800toInf = ROOT.TH1F("h_ld_trC_mtt800toInf", "Trace of Correlation M
 h_ld_cHel_mtt800toInf = ROOT.TH1F("h_ld_cHel_mtt800toInf", "(ld) Cosine Helicity Angle (m_{tt} > 800 GeV);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt800toInf = ROOT.TH1F("h_ld_cHel_P3n_mtt800toInf", "(ld) Cosine Helicity Angle w/P_3n (m_{tt} > 800 GeV);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt800toInf = ROOT.TH1F("h_lb_sigmaPhi_mtt800toInf", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt800toInf = ROOT.TH1F("h_lb_deltaPhi_mtt800toInf", "(lb) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt800toInf = ROOT.TH1F("h_ld_sigmaPhi_mtt800toInf", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt800toInf = ROOT.TH1F("h_ld_deltaPhi_mtt800toInf", "(ld) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
     ## |cosTSA| < 0.4
 h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p4", "antilepton #hat{n}-polarization (m_{tt} > 800 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt800toInf_cosTSA_lt_0p4", "antilepton #hat{r}-polarization (m_{tt} > 800 GeV, |cosTSA|<0.4);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -1194,6 +1283,11 @@ h_ld_Ckk_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_Ckk_mtt800toInf_cosTSA_lt_0
 h_ld_trC_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_trC_mtt800toInf_cosTSA_lt_0p4", "Trace of Correlation Matrix (m_{tt} > 800 GeV, |cosTSA|<0.4);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_mtt800toInf_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle (m_{tt} > 800 GeV, |cosTSA|<0.4);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p4", "(ld) Cosine Helicity Angle w/P_3n (m_{tt} > 800 GeV, |cosTSA|<0.4);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p4", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p4", "(lb) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p4", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.4);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p4 = ROOT.TH1F("h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p4", "(ld) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.4);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
     ## |cosTSA| < 0.7
 h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p7", "antilepton #hat{n}-polarization (m_{tt} > 800 GeV, |cosTSA|<0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
@@ -1253,6 +1347,11 @@ h_ld_trC_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_trC_mtt800toInf_cosTSA_lt_0
 h_ld_cHel_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_mtt800toInf_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle (m_{tt} > 800 GeV, |cosTSA|<0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p7", "(ld) Cosine Helicity Angle w/P_3n (m_{tt} > 800 GeV, |cosTSA|<0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
 
+h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|<0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+
     ## |cosTSA| > 0.7
 h_cos_theta1n_antilepton_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1n_antilepton_mtt800toInf_cosTSA_gt_0p7", "antilepton #hat{n}-polarization (m_{tt} > 800 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}n});Events", 6, -1, 1)
 h_cos_theta1r_antilepton_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_cos_theta1r_antilepton_mtt800toInf_cosTSA_gt_0p7", "antilepton #hat{r}-polarization (m_{tt} > 800 GeV, |cosTSA|>0.7);cos(#theta_{#hat{l}r});Events", 6, -1, 1)
@@ -1310,6 +1409,11 @@ h_ld_Ckk_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_Ckk_mtt800toInf_cosTSA_gt_0
 h_ld_trC_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_trC_mtt800toInf_cosTSA_gt_0p7", "Trace of Correlation Matrix (m_{tt} > 800 GeV, |cosTSA|>0.7);Tr(C);Events", 12, -3, 3)
 h_ld_cHel_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_mtt800toInf_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle (m_{tt} > 800 GeV, |cosTSA|>0.7);cos(#theta_{ld});Events", 6, -1, 1)
 h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7", "(ld) Cosine Helicity Angle w/P_3n (m_{tt} > 800 GeV, |cosTSA|>0.7);cos(#theta_{l(P_{3}b});Events", 6, -1, 1)
+
+h_lb_sigmaPhi_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_sigmaPhi_mtt800toInf_cosTSA_gt_0p7", "(lb) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_lb_deltaPhi_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_lb_deltaPhi_mtt800toInf_cosTSA_gt_0p7", "(lb) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{lb};Events", 12, -3.14, 3.14)
+h_ld_sigmaPhi_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_sigmaPhi_mtt800toInf_cosTSA_gt_0p7", "(ld) #Sigma#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|>0.7);#Sigma#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
+h_ld_deltaPhi_mtt800toInf_cosTSA_gt_0p7 = ROOT.TH1F("h_ld_deltaPhi_mtt800toInf_cosTSA_gt_0p7", "(ld) #Delta#phi_{#hat{n}#hat{r}} (m_{tt} > 800 GeV, |cosTSA|>0.7);#Delta#phi_{#hat{n}#hat{r}}^{ld};Events", 12, -3.14, 3.14)
 
 ### Bins of pT_t ###
 ### pT_t [0, 50] GeV
@@ -1471,6 +1575,14 @@ histogram_defs = {
     "h_ld_cHel": h_ld_cHel,
     "h_ld_cHel_P3n": h_ld_cHel_P3n,
 
+
+    ## Bernreuther variables ##
+
+    "h_lb_sigmaPhi": h_lb_sigmaPhi,
+    "h_lb_deltaPhi": h_lb_deltaPhi,
+    "h_ld_sigmaPhi": h_ld_sigmaPhi,
+    "h_ld_deltaPhi": h_ld_deltaPhi,
+
     ### Bins of mttbar ###
     ######################
     
@@ -1532,6 +1644,11 @@ histogram_defs = {
     "h_ld_cHel_mtt300to400": h_ld_cHel_mtt300to400,
     "h_ld_cHel_P3n_mtt300to400": h_ld_cHel_P3n_mtt300to400,
 
+    "h_lb_sigmaPhi_mtt300to400": h_lb_sigmaPhi_mtt300to400,
+    "h_lb_deltaPhi_mtt300to400": h_lb_deltaPhi_mtt300to400,
+    "h_ld_sigmaPhi_mtt300to400": h_ld_sigmaPhi_mtt300to400,
+    "h_ld_deltaPhi_mtt300to400": h_ld_deltaPhi_mtt300to400,
+
             # beta < 0.9
     "h_cos_theta1n_antilepton_mtt300to400_beta_lt_0p9": h_cos_theta1n_antilepton_mtt300to400_beta_lt_0p9,
     "h_cos_theta1r_antilepton_mtt300to400_beta_lt_0p9": h_cos_theta1r_antilepton_mtt300to400_beta_lt_0p9,
@@ -1589,6 +1706,11 @@ histogram_defs = {
     "h_ld_trC_mtt300to400_beta_lt_0p9": h_ld_trC_mtt300to400_beta_lt_0p9,
     "h_ld_cHel_mtt300to400_beta_lt_0p9": h_ld_cHel_mtt300to400_beta_lt_0p9,
     "h_ld_cHel_P3n_mtt300to400_beta_lt_0p9": h_ld_cHel_P3n_mtt300to400_beta_lt_0p9,
+
+    "h_lb_sigmaPhi_mtt300to400_beta_lt_0p9": h_lb_sigmaPhi_mtt300to400_beta_lt_0p9,
+    "h_lb_deltaPhi_mtt300to400_beta_lt_0p9": h_lb_deltaPhi_mtt300to400_beta_lt_0p9,
+    "h_ld_sigmaPhi_mtt300to400_beta_lt_0p9": h_ld_sigmaPhi_mtt300to400_beta_lt_0p9,
+    "h_ld_deltaPhi_mtt300to400_beta_lt_0p9": h_ld_deltaPhi_mtt300to400_beta_lt_0p9,
 
         ## |cosTSA| < 0.4
     "h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4": h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4,
@@ -1648,6 +1770,11 @@ histogram_defs = {
     "h_ld_cHel_mtt300to400_cosTSA_lt_0p4": h_ld_cHel_mtt300to400_cosTSA_lt_0p4,
     "h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4": h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4,
 
+    "h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4": h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4,
+    "h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4": h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4,
+    "h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4": h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4,
+    "h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4": h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4,
+
             # beta < 0.9
     "h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
     "h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
@@ -1705,6 +1832,11 @@ histogram_defs = {
     "h_ld_trC_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_ld_trC_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
     "h_ld_cHel_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_ld_cHel_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
     "h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
+
+    "h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
+    "h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
+    "h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
+    "h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9": h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9,
 
         ## |cosTSA| < 0.7
     "h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7": h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7,
@@ -1764,6 +1896,11 @@ histogram_defs = {
     "h_ld_cHel_mtt300to400_cosTSA_lt_0p7": h_ld_cHel_mtt300to400_cosTSA_lt_0p7,
     "h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7": h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7,
 
+    "h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7": h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7,
+    "h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7": h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7,
+    "h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7": h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7,
+    "h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7": h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7,
+
             # beta < 0.9
     "h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
     "h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
@@ -1821,6 +1958,11 @@ histogram_defs = {
     "h_ld_trC_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_ld_trC_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
     "h_ld_cHel_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_ld_cHel_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
     "h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
+
+    "h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
+    "h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
+    "h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
+    "h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9": h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9,
 
         ## |cosTSA| > 0.7
     "h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7": h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7,
@@ -1880,6 +2022,11 @@ histogram_defs = {
     "h_ld_cHel_mtt300to400_cosTSA_gt_0p7": h_ld_cHel_mtt300to400_cosTSA_gt_0p7,
     "h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7": h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7,
 
+    "h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7": h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7,
+    "h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7": h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7,
+    "h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7": h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7,
+    "h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7": h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7,
+
             # beta < 0.9
     "h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
     "h_cos_theta1r_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_cos_theta1r_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
@@ -1938,6 +2085,10 @@ histogram_defs = {
     "h_ld_cHel_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_ld_cHel_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
     "h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
 
+    "h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
+    "h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
+    "h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
+    "h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9": h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9,
 
     ### mtt [400, 600] GeV
     "h_cos_theta1n_antilepton_mtt400to600": h_cos_theta1n_antilepton_mtt400to600,
@@ -1997,6 +2148,11 @@ histogram_defs = {
     "h_ld_cHel_mtt400to600": h_ld_cHel_mtt400to600,
     "h_ld_cHel_P3n_mtt400to600": h_ld_cHel_P3n_mtt400to600,
 
+    "h_lb_sigmaPhi_mtt400to600": h_lb_sigmaPhi_mtt400to600,
+    "h_lb_deltaPhi_mtt400to600": h_lb_deltaPhi_mtt400to600,
+    "h_ld_sigmaPhi_mtt400to600": h_ld_sigmaPhi_mtt400to600,
+    "h_ld_deltaPhi_mtt400to600": h_ld_deltaPhi_mtt400to600,
+
         ## |cosTSA| < 0.4
     "h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p4": h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p4,
     "h_cos_theta1r_antilepton_mtt400to600_cosTSA_lt_0p4": h_cos_theta1r_antilepton_mtt400to600_cosTSA_lt_0p4,
@@ -2054,6 +2210,11 @@ histogram_defs = {
     "h_ld_trC_mtt400to600_cosTSA_lt_0p4": h_ld_trC_mtt400to600_cosTSA_lt_0p4,
     "h_ld_cHel_mtt400to600_cosTSA_lt_0p4": h_ld_cHel_mtt400to600_cosTSA_lt_0p4,
     "h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p4": h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p4,
+
+    "h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p4": h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p4,
+    "h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p4": h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p4,
+    "h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p4": h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p4,
+    "h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p4": h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p4,
 
         ## |cosTSA| < 0.7
     "h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p7": h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p7,
@@ -2113,6 +2274,11 @@ histogram_defs = {
     "h_ld_cHel_mtt400to600_cosTSA_lt_0p7": h_ld_cHel_mtt400to600_cosTSA_lt_0p7,
     "h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p7": h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p7,
 
+    "h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p7": h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p7,
+    "h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p7": h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p7,
+    "h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p7": h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p7,
+    "h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p7": h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p7,
+
         ## |cosTSA| > 0.7
     "h_cos_theta1n_antilepton_mtt400to600_cosTSA_gt_0p7": h_cos_theta1n_antilepton_mtt400to600_cosTSA_gt_0p7,
     "h_cos_theta1r_antilepton_mtt400to600_cosTSA_gt_0p7": h_cos_theta1r_antilepton_mtt400to600_cosTSA_gt_0p7,
@@ -2171,6 +2337,10 @@ histogram_defs = {
     "h_ld_cHel_mtt400to600_cosTSA_gt_0p7": h_ld_cHel_mtt400to600_cosTSA_gt_0p7,
     "h_ld_cHel_P3n_mtt400to600_cosTSA_gt_0p7": h_ld_cHel_P3n_mtt400to600_cosTSA_gt_0p7,
 
+    "h_lb_sigmaPhi_mtt400to600_cosTSA_gt_0p7": h_lb_sigmaPhi_mtt400to600_cosTSA_gt_0p7,
+    "h_lb_deltaPhi_mtt400to600_cosTSA_gt_0p7": h_lb_deltaPhi_mtt400to600_cosTSA_gt_0p7,
+    "h_ld_sigmaPhi_mtt400to600_cosTSA_gt_0p7": h_ld_sigmaPhi_mtt400to600_cosTSA_gt_0p7,
+    "h_ld_deltaPhi_mtt400to600_cosTSA_gt_0p7": h_ld_deltaPhi_mtt400to600_cosTSA_gt_0p7,
 
     ### mtt [600, 800] GeV
     "h_cos_theta1n_antilepton_mtt600to800": h_cos_theta1n_antilepton_mtt600to800,
@@ -2230,6 +2400,11 @@ histogram_defs = {
     "h_ld_cHel_mtt600to800": h_ld_cHel_mtt600to800,
     "h_ld_cHel_P3n_mtt600to800": h_ld_cHel_P3n_mtt600to800,
 
+    "h_lb_sigmaPhi_mtt600to800": h_lb_sigmaPhi_mtt600to800,
+    "h_lb_deltaPhi_mtt600to800": h_lb_deltaPhi_mtt600to800,
+    "h_ld_sigmaPhi_mtt600to800": h_ld_sigmaPhi_mtt600to800,
+    "h_ld_deltaPhi_mtt600to800": h_ld_deltaPhi_mtt600to800,
+
         ## |cosTSA| < 0.4
     "h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p4": h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p4,
     "h_cos_theta1r_antilepton_mtt600to800_cosTSA_lt_0p4": h_cos_theta1r_antilepton_mtt600to800_cosTSA_lt_0p4,
@@ -2287,6 +2462,11 @@ histogram_defs = {
     "h_ld_trC_mtt600to800_cosTSA_lt_0p4": h_ld_trC_mtt600to800_cosTSA_lt_0p4,
     "h_ld_cHel_mtt600to800_cosTSA_lt_0p4": h_ld_cHel_mtt600to800_cosTSA_lt_0p4,
     "h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p4": h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p4,
+
+    "h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p4": h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p4,
+    "h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p4": h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p4,
+    "h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p4": h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p4,
+    "h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p4": h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p4,
 
         ## |cosTSA| < 0.7
     "h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p7": h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p7,
@@ -2346,6 +2526,11 @@ histogram_defs = {
     "h_ld_cHel_mtt600to800_cosTSA_lt_0p7": h_ld_cHel_mtt600to800_cosTSA_lt_0p7,
     "h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p7": h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p7,
 
+    "h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p7": h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p7,
+    "h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p7": h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p7,
+    "h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p7": h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p7,
+    "h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p7": h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p7,
+
         ## |cosTSA| > 0.7
     "h_cos_theta1n_antilepton_mtt600to800_cosTSA_gt_0p7": h_cos_theta1n_antilepton_mtt600to800_cosTSA_gt_0p7,
     "h_cos_theta1r_antilepton_mtt600to800_cosTSA_gt_0p7": h_cos_theta1r_antilepton_mtt600to800_cosTSA_gt_0p7,
@@ -2404,6 +2589,10 @@ histogram_defs = {
     "h_ld_cHel_mtt600to800_cosTSA_gt_0p7": h_ld_cHel_mtt600to800_cosTSA_gt_0p7,
     "h_ld_cHel_P3n_mtt600to800_cosTSA_gt_0p7": h_ld_cHel_P3n_mtt600to800_cosTSA_gt_0p7,
 
+    "h_lb_sigmaPhi_mtt600to800_cosTSA_gt_0p7": h_lb_sigmaPhi_mtt600to800_cosTSA_gt_0p7,
+    "h_lb_deltaPhi_mtt600to800_cosTSA_gt_0p7": h_lb_deltaPhi_mtt600to800_cosTSA_gt_0p7,
+    "h_ld_sigmaPhi_mtt600to800_cosTSA_gt_0p7": h_ld_sigmaPhi_mtt600to800_cosTSA_gt_0p7,
+    "h_ld_deltaPhi_mtt600to800_cosTSA_gt_0p7": h_ld_deltaPhi_mtt600to800_cosTSA_gt_0p7,
 
     ### mtt [800, Inf] GeV
     "h_cos_theta1n_antilepton_mtt800toInf": h_cos_theta1n_antilepton_mtt800toInf,
@@ -2463,6 +2652,11 @@ histogram_defs = {
     "h_ld_cHel_mtt800toInf": h_ld_cHel_mtt800toInf,
     "h_ld_cHel_P3n_mtt800toInf": h_ld_cHel_P3n_mtt800toInf,
 
+    "h_lb_sigmaPhi_mtt800toInf": h_lb_sigmaPhi_mtt800toInf,
+    "h_lb_deltaPhi_mtt800toInf": h_lb_deltaPhi_mtt800toInf,
+    "h_ld_sigmaPhi_mtt800toInf": h_ld_sigmaPhi_mtt800toInf,
+    "h_ld_deltaPhi_mtt800toInf": h_ld_deltaPhi_mtt800toInf,
+
         ## |cosTSA| < 0.4
     "h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p4": h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p4,
     "h_cos_theta1r_antilepton_mtt800toInf_cosTSA_lt_0p4": h_cos_theta1r_antilepton_mtt800toInf_cosTSA_lt_0p4,
@@ -2520,6 +2714,11 @@ histogram_defs = {
     "h_ld_trC_mtt800toInf_cosTSA_lt_0p4": h_ld_trC_mtt800toInf_cosTSA_lt_0p4,
     "h_ld_cHel_mtt800toInf_cosTSA_lt_0p4": h_ld_cHel_mtt800toInf_cosTSA_lt_0p4,
     "h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p4": h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p4,
+
+    "h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p4": h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p4,
+    "h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p4": h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p4,
+    "h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p4": h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p4,
+    "h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p4": h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p4,
 
         ## |cosTSA| < 0.7
     "h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p7": h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p7,
@@ -2579,6 +2778,11 @@ histogram_defs = {
     "h_ld_cHel_mtt800toInf_cosTSA_lt_0p7": h_ld_cHel_mtt800toInf_cosTSA_lt_0p7,
     "h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p7": h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p7,
 
+    "h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p7": h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p7,
+    "h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p7": h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p7,
+    "h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p7": h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p7,
+    "h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p7": h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p7,
+
         ## |cosTSA| > 0.7
     "h_cos_theta1n_antilepton_mtt800toInf_cosTSA_gt_0p7": h_cos_theta1n_antilepton_mtt800toInf_cosTSA_gt_0p7,
     "h_cos_theta1r_antilepton_mtt800toInf_cosTSA_gt_0p7": h_cos_theta1r_antilepton_mtt800toInf_cosTSA_gt_0p7,
@@ -2635,5 +2839,10 @@ histogram_defs = {
     "h_ld_Ckk_mtt800toInf_cosTSA_gt_0p7": h_ld_Ckk_mtt800toInf_cosTSA_gt_0p7,
     "h_ld_trC_mtt800toInf_cosTSA_gt_0p7": h_ld_trC_mtt800toInf_cosTSA_gt_0p7,
     "h_ld_cHel_mtt800toInf_cosTSA_gt_0p7": h_ld_cHel_mtt800toInf_cosTSA_gt_0p7,
-    "h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7": h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7
+    "h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7": h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7,
+
+    "h_lb_sigmaPhi_mtt800toInf_cosTSA_gt_0p7": h_lb_sigmaPhi_mtt800toInf_cosTSA_gt_0p7,
+    "h_lb_deltaPhi_mtt800toInf_cosTSA_gt_0p7": h_lb_deltaPhi_mtt800toInf_cosTSA_gt_0p7,
+    "h_ld_sigmaPhi_mtt800toInf_cosTSA_gt_0p7": h_ld_sigmaPhi_mtt800toInf_cosTSA_gt_0p7,
+    "h_ld_deltaPhi_mtt800toInf_cosTSA_gt_0p7": h_ld_deltaPhi_mtt800toInf_cosTSA_gt_0p7
     }

@@ -130,21 +130,21 @@ def process_event(entry, histograms):
     deltaAbsY  =       float('nan')
     hypTan_deltaAbsY = float('nan')
 
-    ## (leptonic-top scenario) spin-analyzer direction vectors ##
-    #############################################################
+    ## (leptonic-top scenario) spin-analyzer info ##
+    ################################################
     # top quark decay product
-    mRF_antiLepton_dir = ROOT.TVector3()
+    mRF_antiLepton_dir =                ROOT.TVector3()
     # top antiquark decay products
-    mRF_hadronic_antibottom_quark_dir =     ROOT.TVector3()
-    mRF_dtype_quark_4vec_dir =              ROOT.TVector3()
+    mRF_hadronic_antibottom_quark_dir = ROOT.TVector3()
+    mRF_dtype_quark_4vec_dir =          ROOT.TVector3()
 
-    ## (hadronic-top scenario) spin-analyzer direction vectors ##
-    #############################################################
+    ## (hadronic-top scenario) spin-analyzer info ##
+    ################################################
     # top quark decay products
     mRF_hadronic_bottom_quark_dir = ROOT.TVector3()
     mRF_antiDtype_quark_4vec_dir =  ROOT.TVector3()
     # top antiquark decay product
-    mRF_lepton_4vec_dir =     ROOT.TVector3()
+    mRF_lepton_4vec_dir =           ROOT.TVector3()
 
     # Bernreuther basis
     p_axis = ROOT.TVector3(0, 0, 1)  # proton beam direction in lab frame
@@ -175,15 +175,12 @@ def process_event(entry, histograms):
     cos_theta2rStar_lepton =     float('nan')
     
     # Spin correlation variables using lepton and b-quarks
-    lb_cHel =     float('nan')
-    lb_cHel_P3n = float('nan')
     lb_cos_theta1k = float('nan')
     lb_cos_theta1r = float('nan')
     lb_cos_theta1n = float('nan')
     lb_cos_theta2k = float('nan')
     lb_cos_theta2r = float('nan')
     lb_cos_theta2n = float('nan')
-    # CA polarization
     lb_cos_theta1kStar = float('nan')
     lb_cos_theta1rStar = float('nan')
     lb_cos_theta2kStar = float('nan')
@@ -197,17 +194,16 @@ def process_event(entry, histograms):
     lb_Ckn = float('nan')
     lb_Ckr = float('nan')
     lb_Ckk = float('nan')
+    lb_cHel =     float('nan')
+    lb_cHel_P3n = float('nan')
 
     # Spin correlation variables using lepton and d-quarks
-    ld_cHel =     float('nan')
-    ld_cHel_P3n = float('nan')
     ld_cos_theta1k = float('nan')
     ld_cos_theta1r = float('nan')
     ld_cos_theta1n = float('nan')
     ld_cos_theta2k = float('nan')
     ld_cos_theta2r = float('nan')
     ld_cos_theta2n = float('nan')
-    # CA polarization
     ld_cos_theta1kStar = float('nan')
     ld_cos_theta1rStar = float('nan')
     ld_cos_theta2kStar = float('nan')
@@ -221,6 +217,31 @@ def process_event(entry, histograms):
     ld_Ckn = float('nan')
     ld_Ckr = float('nan')
     ld_Ckk = float('nan')
+    ld_cHel =     float('nan')
+    ld_cHel_P3n = float('nan')
+
+
+    ## Baumgart&Tweedie variables ##
+    ################################
+    ## leptonic-top scenario ##
+    # top quark decay product
+    antiLepton_phi =                float('nan')
+    # top antiquark decay products
+    hadronic_antibottom_quark_phi = float('nan')
+    dtype_quark_phi =               float('nan')
+
+    ## hadronic-top scenario ##
+    # top quark decay products
+    hadronic_bottom_quark_phi = float('nan')
+    antiDtype_quark_phi =       float('nan')
+    # top antiquark decay product
+    lepton_phi =                float('nan')
+
+    lb_sigmaPhi = float('nan')
+    lb_deltaPhi = float('nan')
+
+    ld_sigmaPhi = float('nan')
+    ld_deltaPhi = float('nan')
 
 
     # Find top or antitop quark
@@ -243,19 +264,6 @@ def process_event(entry, histograms):
                 antitop_4vec.SetPtEtaPhiM(entry.GenPart_pt[i], entry.GenPart_eta[i], entry.GenPart_phi[i], entry.GenPart_mass[i])
                 antitops.append((antitop_4vec, antitop_idx))
                 antitop_E = antitop_4vec.E()
-
-    # Compute and plot ttbar system quantities while still in the LAB FRAME
-    ttbar_4vec = top_4vec + antitop_4vec
-    m_tt = ttbar_4vec.M()
-    beta = abs((top_4vec.Pz() + antitop_4vec.Pz()) / (top_E + antitop_E))
-    histograms['h_invariantMass'].Fill(m_tt)
-    histograms['h_beta'].Fill(beta)
-
-    # Charge Asymmetry
-    deltaAbsY = abs(top_4vec.Rapidity()) - abs(antitop_4vec.Rapidity())
-    hypTan_deltaAbsY = ROOT.TMath.TanH(deltaAbsY)
-    histograms['h_deltaAbsY'].Fill(deltaAbsY)
-    histograms['h_hypTan_deltaAbsY'].Fill(hypTan_deltaAbsY)
 
     # Find bottom quarks from top or anti-top quark decay
     for j in range(entry.nGenPart):
@@ -355,6 +363,15 @@ def process_event(entry, histograms):
         hadronic_bottom_quarks.append((hadronic_bottom_quark_4vec, bottom_idx))
 
 
+    # Compute and plot ttbar system quantities while still in the LAB FRAME
+    ttbar_4vec = top_4vec + antitop_4vec
+    m_tt = ttbar_4vec.M()
+    beta = abs((top_4vec.Pz() + antitop_4vec.Pz()) / (top_E + antitop_E))
+    # Charge Asymmetry
+    deltaAbsY = abs(top_4vec.Rapidity()) - abs(antitop_4vec.Rapidity())
+    hypTan_deltaAbsY = ROOT.TMath.TanH(deltaAbsY)
+    
+
     ##############################################
     ### Fill kinematic histograms in LAB FRAME ###
     ##############################################
@@ -369,6 +386,13 @@ def process_event(entry, histograms):
         histograms['h_antitopEta'].Fill(antitop_4vec.Eta())
         histograms['h_antitopPhi'].Fill(antitop_4vec.Phi())
         histograms['h_antitopMass'].Fill(antitop_4vec.M())
+
+    # ttbar system histograms
+    histograms['h_invariantMass'].Fill(m_tt)
+    histograms['h_beta'].Fill(beta)
+    # Charge Asymmetry
+    histograms['h_deltaAbsY'].Fill(deltaAbsY)
+    histograms['h_hypTan_deltaAbsY'].Fill(hypTan_deltaAbsY)
 
     # bottom quark histograms
     for b_4vector, bottom_idx in bottom_quarks:
@@ -462,12 +486,13 @@ def process_event(entry, histograms):
     ### build Bernreuther basis ###
     ###############################
     k_axis = top_4vec.Vect().Unit()                        # direction of top quark in ttbar rest frame
-    scattering_angle = k_axis.Angle(p_axis)                # angle between top quark direction and proton beam direction
+    cosTSA = k_axis.Dot(p_axis)                            #  cos(Top_Scattering_Angle)  "y" in Bernreuther paper
+    abs_sinTSA = ROOT.TMath.Sqrt(1 - (cosTSA * cosTSA))    # |sin(Top_Scattering_Angle)| "r" in Bernreuther paper
+    r_axis = (1/abs_sinTSA) * (p_axis - (cosTSA * k_axis)) # orthogonal to k_axis and lies in production plane
+    n_axis = (1/abs_sinTSA) * p_axis.Cross(k_axis)         # orthogonal to production plane
+    # plot top quark scattering angle
+    scattering_angle = k_axis.Angle(p_axis)
     histograms['h_scattering_angle'].Fill(scattering_angle)
-    mag_sinTSA = abs(ROOT.TMath.Sin(scattering_angle))     # magnitude of sin(Top_Scattering_Angle)
-    cosTSA = ROOT.TMath.Cos(scattering_angle)              # cos(Top_Scattering_Angle)
-    r_axis = (1/mag_sinTSA) * (p_axis - (cosTSA * k_axis)) # orthogonal to k_axis and lies in production plane
-    n_axis = (1/mag_sinTSA) * p_axis.Cross(k_axis)         # orthogonal to production plane
 
     ### top quark reference axes ###
     ################################
@@ -517,85 +542,173 @@ def process_event(entry, histograms):
     ##################################
     # LEPTON Exclusive polarization variables
     if has_hadronic_antiTop_decay:
-        cos_theta1k_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_top))
-        cos_theta1r_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_top))
-        cos_theta1n_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_top))
-        cos_theta1kStar_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(kStar_top))
-        cos_theta1rStar_antilepton = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(rStar_top))
+        cos_theta1k_antilepton =     mRF_antiLepton_dir.Dot(k_top)
+        cos_theta1r_antilepton =     mRF_antiLepton_dir.Dot(r_top)
+        cos_theta1n_antilepton =     mRF_antiLepton_dir.Dot(n_top)
+        cos_theta1kStar_antilepton = mRF_antiLepton_dir.Dot(kStar_top)
+        cos_theta1rStar_antilepton = mRF_antiLepton_dir.Dot(rStar_top)
     elif has_hadronic_top_decay:
-        cos_theta2k_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_antitop))
-        cos_theta2r_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_antitop))
-        cos_theta2n_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_antitop))
-        cos_theta2kStar_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(kStar_antitop))
-        cos_theta2rStar_lepton = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(rStar_antitop))
+        cos_theta2k_lepton =     mRF_lepton_4vec_dir.Dot(k_antitop)
+        cos_theta2r_lepton =     mRF_lepton_4vec_dir.Dot(r_antitop)
+        cos_theta2n_lepton =     mRF_lepton_4vec_dir.Dot(n_antitop)
+        cos_theta2kStar_lepton = mRF_lepton_4vec_dir.Dot(kStar_antitop)
+        cos_theta2rStar_lepton = mRF_lepton_4vec_dir.Dot(rStar_antitop)
 
-    # Using leptons and (b- OR d-quarks) as spin analyzers
+
+    # Using leptons and (b- OR dType-quarks) as spin analyzers
     ### leptonic-top scenario ###
     if has_hadronic_antiTop_decay: 
         ### Polarizations coefficients ###
         ##################################
         # top quark decay product
-        lb_cos_theta1k = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_top))
-        lb_cos_theta1r = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_top))
-        lb_cos_theta1n = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_top))
-        lb_cos_theta1kStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(kStar_top))
-        lb_cos_theta1rStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(rStar_top))
-        ld_cos_theta1k = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(k_top))
-        ld_cos_theta1r = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(r_top))
-        ld_cos_theta1n = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(n_top))
-        ld_cos_theta1kStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(kStar_top))
-        ld_cos_theta1rStar = ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(rStar_top))
+        lb_cos_theta1k =     mRF_antiLepton_dir.Dot(k_top)
+        lb_cos_theta1r =     mRF_antiLepton_dir.Dot(r_top)
+        lb_cos_theta1n =     mRF_antiLepton_dir.Dot(n_top)
+        lb_cos_theta1kStar = mRF_antiLepton_dir.Dot(kStar_top)
+        lb_cos_theta1rStar = mRF_antiLepton_dir.Dot(rStar_top)
+
+        ld_cos_theta1k =     mRF_antiLepton_dir.Dot(k_top)
+        ld_cos_theta1r =     mRF_antiLepton_dir.Dot(r_top)
+        ld_cos_theta1n =     mRF_antiLepton_dir.Dot(n_top)
+        ld_cos_theta1kStar = mRF_antiLepton_dir.Dot(kStar_top)
+        ld_cos_theta1rStar = mRF_antiLepton_dir.Dot(rStar_top)
         # top antiquark decay products
-        lb_cos_theta2k = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(k_antitop))
-        lb_cos_theta2r = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(r_antitop))
-        lb_cos_theta2n = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(n_antitop))
-        lb_cos_theta2kStar = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(kStar_antitop))
-        lb_cos_theta2rStar = ROOT.TMath.Cos(mRF_hadronic_antibottom_quark_dir.Angle(rStar_antitop))
-        ld_cos_theta2k = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(k_antitop))
-        ld_cos_theta2r = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(r_antitop))
-        ld_cos_theta2n = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(n_antitop))
-        ld_cos_theta2kStar = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(kStar_antitop))
-        ld_cos_theta2rStar = ROOT.TMath.Cos(mRF_dtype_quark_4vec_dir.Angle(rStar_antitop))
+        lb_cos_theta2k =     mRF_hadronic_antibottom_quark_dir.Dot(k_antitop)
+        lb_cos_theta2r =     mRF_hadronic_antibottom_quark_dir.Dot(r_antitop)
+        lb_cos_theta2n =     mRF_hadronic_antibottom_quark_dir.Dot(n_antitop)
+        lb_cos_theta2kStar = mRF_hadronic_antibottom_quark_dir.Dot(kStar_antitop)
+        lb_cos_theta2rStar = mRF_hadronic_antibottom_quark_dir.Dot(rStar_antitop)
+
+        ld_cos_theta2k =     mRF_dtype_quark_4vec_dir.Dot(k_antitop)
+        ld_cos_theta2r =     mRF_dtype_quark_4vec_dir.Dot(r_antitop)
+        ld_cos_theta2n =     mRF_dtype_quark_4vec_dir.Dot(n_antitop)
+        ld_cos_theta2kStar = mRF_dtype_quark_4vec_dir.Dot(kStar_antitop)
+        ld_cos_theta2rStar = mRF_dtype_quark_4vec_dir.Dot(rStar_antitop)
 
         ### Entanglement variables ###
         ##############################
-        lb_cHel =    ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(mRF_hadronic_antibottom_quark_dir))
-        ld_cHel =    ROOT.TMath.Cos(mRF_antiLepton_dir.Angle(mRF_dtype_quark_4vec_dir))
+        lb_cHel = mRF_antiLepton_dir.Dot(mRF_hadronic_antibottom_quark_dir)
         lb_cHel_P3n = lb_cos_theta1k*lb_cos_theta2k + lb_cos_theta1r*lb_cos_theta2r - lb_cos_theta1n*lb_cos_theta2n
+
+        ld_cHel = mRF_antiLepton_dir.Dot(mRF_dtype_quark_4vec_dir)
         ld_cHel_P3n = ld_cos_theta1k*ld_cos_theta2k + ld_cos_theta1r*ld_cos_theta2r - ld_cos_theta1n*ld_cos_theta2n
+
+
+        ### Baumgart&Tweedie variables ONLY USE TOP QUARK REFERENCE AXES ###
+        ####################################################################
+        # ATan2 syntax is ATan2(y,x) #
+        # mapping Bernreuther basis to {x,y,z} depends on scattering angle #
+        if cosTSA >= 0: # top quark in forward hemisphere means {x,y,z} = {n,r,k}
+            antiLepton_phi =                ROOT.TMath.ATan2(               mRF_antiLepton_dir.Dot(r_top),                mRF_antiLepton_dir.Dot(n_top))
+            hadronic_antibottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_antibottom_quark_dir.Dot(r_top), mRF_hadronic_antibottom_quark_dir.Dot(n_top))
+            dtype_quark_phi =               ROOT.TMath.ATan2(         mRF_dtype_quark_4vec_dir.Dot(r_top),          mRF_dtype_quark_4vec_dir.Dot(n_top))
+        else: # top quark in backward hemisphere means {x,y,z} = {r,n,k}
+            antiLepton_phi =                ROOT.TMath.ATan2(               mRF_antiLepton_dir.Dot(n_top),                mRF_antiLepton_dir.Dot(r_top))
+            hadronic_antibottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_antibottom_quark_dir.Dot(n_top), mRF_hadronic_antibottom_quark_dir.Dot(r_top))
+            dtype_quark_phi =               ROOT.TMath.ATan2(         mRF_dtype_quark_4vec_dir.Dot(n_top),          mRF_dtype_quark_4vec_dir.Dot(r_top))
+        
+        lb_sigmaPhi = antiLepton_phi + hadronic_antibottom_quark_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        # keep sigmaPhi in the range [-pi, pi]
+        if lb_sigmaPhi > ROOT.TMath.Pi():
+            lb_sigmaPhi -= 2*ROOT.TMath.Pi()
+        elif lb_sigmaPhi < -ROOT.TMath.Pi():
+            lb_sigmaPhi += 2*ROOT.TMath.Pi()
+        lb_deltaPhi = antiLepton_phi - hadronic_antibottom_quark_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        # keep deltaPhi in the range [-pi, pi]
+        if lb_deltaPhi > ROOT.TMath.Pi():
+            lb_deltaPhi -= 2*ROOT.TMath.Pi()
+        elif lb_deltaPhi < -ROOT.TMath.Pi():
+            lb_deltaPhi += 2*ROOT.TMath.Pi()
+        
+        ld_sigmaPhi = antiLepton_phi + dtype_quark_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        # keep sigmaPhi in the range [-pi, pi]
+        if ld_sigmaPhi > ROOT.TMath.Pi():
+            ld_sigmaPhi -= 2*ROOT.TMath.Pi()
+        elif ld_sigmaPhi < -ROOT.TMath.Pi():
+            ld_sigmaPhi += 2*ROOT.TMath.Pi()
+        ld_deltaPhi = antiLepton_phi - dtype_quark_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        # keep deltaPhi in the range [-pi, pi]
+        if ld_deltaPhi > ROOT.TMath.Pi():
+            ld_deltaPhi -= 2*ROOT.TMath.Pi()
+        elif ld_deltaPhi < -ROOT.TMath.Pi():
+            ld_deltaPhi += 2*ROOT.TMath.Pi()
 
     ### hadronic-top scenario ###
     elif has_hadronic_top_decay: 
         ### Polarizations coefficients ###
         ##################################
         # top quark decay products
-        lb_cos_theta1k = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(k_antitop))
-        lb_cos_theta1r = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(r_antitop))
-        lb_cos_theta1n = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(n_antitop))
-        lb_cos_theta1kStar = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(kStar_antitop))
-        lb_cos_theta1rStar = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(rStar_antitop))
-        ld_cos_theta1k = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(k_antitop))
-        ld_cos_theta1r = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(r_antitop))
-        ld_cos_theta1n = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(n_antitop))
-        ld_cos_theta1kStar = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(kStar_antitop))
-        ld_cos_theta1rStar = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(rStar_antitop))
+        lb_cos_theta1k = mRF_hadronic_bottom_quark_dir.Dot(k_antitop)
+        lb_cos_theta1r = mRF_hadronic_bottom_quark_dir.Dot(r_antitop)
+        lb_cos_theta1n = mRF_hadronic_bottom_quark_dir.Dot(n_antitop)
+        lb_cos_theta1kStar = mRF_hadronic_bottom_quark_dir.Dot(kStar_antitop)
+        lb_cos_theta1rStar = mRF_hadronic_bottom_quark_dir.Dot(rStar_antitop)
+
+        ld_cos_theta1k = mRF_antiDtype_quark_4vec_dir.Dot(k_antitop)
+        ld_cos_theta1r = mRF_antiDtype_quark_4vec_dir.Dot(r_antitop)
+        ld_cos_theta1n = mRF_antiDtype_quark_4vec_dir.Dot(n_antitop)
+        ld_cos_theta1kStar = mRF_antiDtype_quark_4vec_dir.Dot(kStar_antitop)
+        ld_cos_theta1rStar = mRF_antiDtype_quark_4vec_dir.Dot(rStar_antitop)
         # top antiquark decay products
-        lb_cos_theta2k = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_top))
-        lb_cos_theta2r = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_top))
-        lb_cos_theta2n = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_top))
-        lb_cos_theta2kStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(kStar_top))
-        lb_cos_theta2rStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(rStar_top))
-        ld_cos_theta2k = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(k_top))
-        ld_cos_theta2r = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(r_top))
-        ld_cos_theta2n = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(n_top))
-        ld_cos_theta2kStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(kStar_top))
-        ld_cos_theta2rStar = ROOT.TMath.Cos(mRF_lepton_4vec_dir.Angle(rStar_top))
+        lb_cos_theta2k = mRF_lepton_4vec_dir.Dot(k_top)
+        lb_cos_theta2r = mRF_lepton_4vec_dir.Dot(r_top)
+        lb_cos_theta2n = mRF_lepton_4vec_dir.Dot(n_top)
+        lb_cos_theta2kStar = mRF_lepton_4vec_dir.Dot(kStar_top)
+        lb_cos_theta2rStar = mRF_lepton_4vec_dir.Dot(rStar_top)
+
+        ld_cos_theta2k = mRF_lepton_4vec_dir.Dot(k_top)
+        ld_cos_theta2r = mRF_lepton_4vec_dir.Dot(r_top)
+        ld_cos_theta2n = mRF_lepton_4vec_dir.Dot(n_top)
+        ld_cos_theta2kStar = mRF_lepton_4vec_dir.Dot(kStar_top)
+        ld_cos_theta2rStar = mRF_lepton_4vec_dir.Dot(rStar_top)
         ### Entanglement variables ###
         ##############################
-        lb_cHel = ROOT.TMath.Cos(mRF_hadronic_bottom_quark_dir.Angle(mRF_lepton_4vec_dir))
-        ld_cHel = ROOT.TMath.Cos(mRF_antiDtype_quark_4vec_dir.Angle(mRF_lepton_4vec_dir))
+        lb_cHel = mRF_hadronic_bottom_quark_dir.Dot(mRF_lepton_4vec_dir)
         lb_cHel_P3n = lb_cos_theta1k*lb_cos_theta2k + lb_cos_theta1r*lb_cos_theta2r - lb_cos_theta1n*lb_cos_theta2n
-        ld_cHel_P3n = lb_cos_theta1k*lb_cos_theta2k + lb_cos_theta1r*lb_cos_theta2r - lb_cos_theta1n*lb_cos_theta2n
+
+        ld_cHel = mRF_antiDtype_quark_4vec_dir.Dot(mRF_lepton_4vec_dir)
+        ld_cHel_P3n = ld_cos_theta1k*ld_cos_theta2k + ld_cos_theta1r*ld_cos_theta2r - ld_cos_theta1n*ld_cos_theta2n
+
+
+        ### Baumgart&Tweedie variables ONLY USE TOP QUARK REFERENCE AXES ###
+        ####################################################################
+        # ATan2(y,x) {x,y,z} -> {n,r,k} depends on sign of scattering angle #
+        if cosTSA >= 0: # top quark in forward hemisphere means {x,y,z} = {n,r,k}
+            hadronic_bottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_bottom_quark_dir.Dot(r_top), mRF_hadronic_bottom_quark_dir.Dot(n_top))
+            antiDtype_quark_phi =       ROOT.TMath.ATan2( mRF_antiDtype_quark_4vec_dir.Dot(r_top),  mRF_antiDtype_quark_4vec_dir.Dot(n_top))
+            lepton_phi =                ROOT.TMath.ATan2(          mRF_lepton_4vec_dir.Dot(r_top),           mRF_lepton_4vec_dir.Dot(n_top))
+        else: # top quark in backward hemisphere means {x,y,z} = {r,n,k}
+            hadronic_bottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_bottom_quark_dir.Dot(n_top), mRF_hadronic_bottom_quark_dir.Dot(r_top))
+            antiDtype_quark_phi =       ROOT.TMath.ATan2( mRF_antiDtype_quark_4vec_dir.Dot(n_top),  mRF_antiDtype_quark_4vec_dir.Dot(r_top))
+            lepton_phi =                ROOT.TMath.ATan2(          mRF_lepton_4vec_dir.Dot(n_top),           mRF_lepton_4vec_dir.Dot(r_top))
+        
+        lb_sigmaPhi = hadronic_bottom_quark_phi + lepton_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        # keep sigmaPhi in the range [-pi, pi]
+        if lb_sigmaPhi > ROOT.TMath.Pi():
+            lb_sigmaPhi -= 2*ROOT.TMath.Pi()
+        elif lb_sigmaPhi < -ROOT.TMath.Pi():
+            lb_sigmaPhi += 2*ROOT.TMath.Pi()
+        lb_deltaPhi = hadronic_bottom_quark_phi - lepton_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        # keep deltaPhi in the range [-pi, pi]
+        if lb_deltaPhi > ROOT.TMath.Pi():
+            lb_deltaPhi -= 2*ROOT.TMath.Pi()
+        elif lb_deltaPhi < -ROOT.TMath.Pi():
+            lb_deltaPhi += 2*ROOT.TMath.Pi()
+
+        ld_sigmaPhi = antiDtype_quark_phi + lepton_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        # keep sigmaPhi in the range [-pi, pi]
+        if ld_sigmaPhi > ROOT.TMath.Pi():
+            ld_sigmaPhi -= 2*ROOT.TMath.Pi()
+        elif ld_sigmaPhi < -ROOT.TMath.Pi():
+            ld_sigmaPhi += 2*ROOT.TMath.Pi()
+        ld_deltaPhi = antiDtype_quark_phi - lepton_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        # keep deltaPhi in the range [-pi, pi]
+        if ld_deltaPhi > ROOT.TMath.Pi():
+            ld_deltaPhi -= 2*ROOT.TMath.Pi()
+        elif ld_deltaPhi < -ROOT.TMath.Pi():
+            ld_deltaPhi += 2*ROOT.TMath.Pi()
+
+
     ### C_ij coefficients ###
     #########################
     lb_Cnn = lb_cos_theta1n * lb_cos_theta2n
@@ -685,6 +798,14 @@ def process_event(entry, histograms):
     histograms['h_ld_cHel_P3n'].Fill(ld_cHel_P3n)
     histograms['h_ld_trC'].Fill(ld_trC)
 
+    ### Baumgart&Tweedie variables ###
+    ##################################
+    histograms['h_lb_sigmaPhi'].Fill(lb_sigmaPhi)
+    histograms['h_lb_deltaPhi'].Fill(lb_deltaPhi)
+    histograms['h_ld_sigmaPhi'].Fill(ld_sigmaPhi)
+    histograms['h_ld_deltaPhi'].Fill(ld_deltaPhi)
+
+
     ### mtt [300, 400] GeV ###
     if 300 < m_tt < 400:
         histograms['h_cos_theta1n_antilepton_mtt300to400'].Fill(cos_theta1n_antilepton)
@@ -741,6 +862,10 @@ def process_event(entry, histograms):
         histograms['h_ld_trC_mtt300to400'].Fill(ld_trC)
         histograms['h_ld_cHel_mtt300to400'].Fill(ld_cHel)
         histograms['h_ld_cHel_P3n_mtt300to400'].Fill(ld_cHel_P3n)
+        histograms['h_lb_sigmaPhi_mtt300to400'].Fill(lb_sigmaPhi)
+        histograms['h_lb_deltaPhi_mtt300to400'].Fill(lb_deltaPhi)
+        histograms['h_ld_sigmaPhi_mtt300to400'].Fill(ld_sigmaPhi)
+        histograms['h_ld_deltaPhi_mtt300to400'].Fill(ld_deltaPhi)
         if beta < 0.9:
             histograms['h_cos_theta1n_antilepton_mtt300to400_beta_lt_0p9'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt300to400_beta_lt_0p9'].Fill(cos_theta1r_antilepton)
@@ -796,6 +921,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt300to400_beta_lt_0p9'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt300to400_beta_lt_0p9'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt300to400_beta_lt_0p9'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt300to400_beta_lt_0p9'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt300to400_beta_lt_0p9'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt300to400_beta_lt_0p9'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt300to400_beta_lt_0p9'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.4:
             histograms['h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p4'].Fill(cos_theta1r_antilepton)
@@ -851,6 +980,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt300to400_cosTSA_lt_0p4'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt300to400_cosTSA_lt_0p4'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4'].Fill(ld_deltaPhi)
             if beta < 0.9:
                 histograms['h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(cos_theta1n_antilepton)
                 histograms['h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(cos_theta1r_antilepton)
@@ -906,6 +1039,10 @@ def process_event(entry, histograms):
                 histograms['h_ld_trC_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(ld_trC)
                 histograms['h_ld_cHel_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(ld_cHel)
                 histograms['h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(ld_cHel_P3n)
+                histograms['h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(lb_sigmaPhi)
+                histograms['h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(lb_deltaPhi)
+                histograms['h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(ld_sigmaPhi)
+                histograms['h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p4_beta_lt_0p9'].Fill(ld_deltaPhi)
         elif abs(cosTSA) < 0.7:
             histograms['h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p7'].Fill(cos_theta1r_antilepton)
@@ -961,6 +1098,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt300to400_cosTSA_lt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt300to400_cosTSA_lt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7'].Fill(ld_deltaPhi)
             if beta < 0.9:
                 histograms['h_cos_theta1n_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(cos_theta1n_antilepton)
                 histograms['h_cos_theta1r_antilepton_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(cos_theta1r_antilepton)
@@ -1016,6 +1157,10 @@ def process_event(entry, histograms):
                 histograms['h_ld_trC_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(ld_trC)
                 histograms['h_ld_cHel_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(ld_cHel)
                 histograms['h_ld_cHel_P3n_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(ld_cHel_P3n)
+                histograms['h_lb_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(lb_sigmaPhi)
+                histograms['h_lb_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(lb_deltaPhi)
+                histograms['h_ld_sigmaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(ld_sigmaPhi)
+                histograms['h_ld_deltaPhi_mtt300to400_cosTSA_lt_0p7_beta_lt_0p9'].Fill(ld_deltaPhi)
         elif abs(cosTSA) > 0.7:
             histograms['h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt300to400_cosTSA_gt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1071,6 +1216,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt300to400_cosTSA_gt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt300to400_cosTSA_gt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7'].Fill(ld_deltaPhi)
             if beta < 0.9:
                 histograms['h_cos_theta1n_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(cos_theta1n_antilepton)
                 histograms['h_cos_theta1r_antilepton_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(cos_theta1r_antilepton)
@@ -1125,6 +1274,11 @@ def process_event(entry, histograms):
                 histograms['h_ld_Ckk_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(ld_Ckk)
                 histograms['h_ld_trC_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(ld_trC)
                 histograms['h_ld_cHel_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(ld_cHel)
+                histograms['h_ld_cHel_P3n_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(ld_cHel_P3n)
+                histograms['h_lb_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(lb_sigmaPhi)
+                histograms['h_lb_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(lb_deltaPhi)
+                histograms['h_ld_sigmaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(ld_sigmaPhi)
+                histograms['h_ld_deltaPhi_mtt300to400_cosTSA_gt_0p7_beta_lt_0p9'].Fill(ld_deltaPhi)
     elif 400 < m_tt < 600:
         histograms['h_cos_theta1n_antilepton_mtt400to600'].Fill(cos_theta1n_antilepton)
         histograms['h_cos_theta1r_antilepton_mtt400to600'].Fill(cos_theta1r_antilepton)
@@ -1180,6 +1334,10 @@ def process_event(entry, histograms):
         histograms['h_ld_trC_mtt400to600'].Fill(ld_trC)
         histograms['h_ld_cHel_mtt400to600'].Fill(ld_cHel)
         histograms['h_ld_cHel_P3n_mtt400to600'].Fill(ld_cHel_P3n)
+        histograms['h_lb_sigmaPhi_mtt400to600'].Fill(lb_sigmaPhi)
+        histograms['h_lb_deltaPhi_mtt400to600'].Fill(lb_deltaPhi)
+        histograms['h_ld_sigmaPhi_mtt400to600'].Fill(ld_sigmaPhi)
+        histograms['h_ld_deltaPhi_mtt400to600'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.4:
             histograms['h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p4'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt400to600_cosTSA_lt_0p4'].Fill(cos_theta1r_antilepton)
@@ -1235,6 +1393,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt400to600_cosTSA_lt_0p4'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt400to600_cosTSA_lt_0p4'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p4'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p4'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p4'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p4'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p4'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.7:
             histograms['h_cos_theta1n_antilepton_mtt400to600_cosTSA_lt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt400to600_cosTSA_lt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1290,6 +1452,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt400to600_cosTSA_lt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt400to600_cosTSA_lt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt400to600_cosTSA_lt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt400to600_cosTSA_lt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt400to600_cosTSA_lt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt400to600_cosTSA_lt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt400to600_cosTSA_lt_0p7'].Fill(ld_deltaPhi)
         elif abs(cosTSA) > 0.7:
             histograms['h_cos_theta1n_antilepton_mtt400to600_cosTSA_gt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt400to600_cosTSA_gt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1345,6 +1511,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt400to600_cosTSA_gt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt400to600_cosTSA_gt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt400to600_cosTSA_gt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt400to600_cosTSA_gt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt400to600_cosTSA_gt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt400to600_cosTSA_gt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt400to600_cosTSA_gt_0p7'].Fill(ld_deltaPhi)
     elif 600 < m_tt < 800:
         histograms['h_cos_theta1n_antilepton_mtt600to800'].Fill(cos_theta1n_antilepton)
         histograms['h_cos_theta1r_antilepton_mtt600to800'].Fill(cos_theta1r_antilepton)
@@ -1400,6 +1570,10 @@ def process_event(entry, histograms):
         histograms['h_ld_trC_mtt600to800'].Fill(ld_trC)
         histograms['h_ld_cHel_mtt600to800'].Fill(ld_cHel)
         histograms['h_ld_cHel_P3n_mtt600to800'].Fill(ld_cHel_P3n)
+        histograms['h_lb_sigmaPhi_mtt600to800'].Fill(lb_sigmaPhi)
+        histograms['h_lb_deltaPhi_mtt600to800'].Fill(lb_deltaPhi)
+        histograms['h_ld_sigmaPhi_mtt600to800'].Fill(ld_sigmaPhi)
+        histograms['h_ld_deltaPhi_mtt600to800'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.4:
             histograms['h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p4'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt600to800_cosTSA_lt_0p4'].Fill(cos_theta1r_antilepton)
@@ -1455,6 +1629,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt600to800_cosTSA_lt_0p4'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt600to800_cosTSA_lt_0p4'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p4'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p4'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p4'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p4'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p4'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.7:
             histograms['h_cos_theta1n_antilepton_mtt600to800_cosTSA_lt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt600to800_cosTSA_lt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1510,6 +1688,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt600to800_cosTSA_lt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt600to800_cosTSA_lt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt600to800_cosTSA_lt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt600to800_cosTSA_lt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt600to800_cosTSA_lt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt600to800_cosTSA_lt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt600to800_cosTSA_lt_0p7'].Fill(ld_deltaPhi)
         if abs(cosTSA) > 0.7:
             histograms['h_cos_theta1n_antilepton_mtt600to800_cosTSA_gt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt600to800_cosTSA_gt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1565,6 +1747,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt600to800_cosTSA_gt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt600to800_cosTSA_gt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt600to800_cosTSA_gt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt600to800_cosTSA_gt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt600to800_cosTSA_gt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt600to800_cosTSA_gt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt600to800_cosTSA_gt_0p7'].Fill(ld_deltaPhi)
     elif m_tt > 800:
         histograms['h_cos_theta1n_antilepton_mtt800toInf'].Fill(cos_theta1n_antilepton)
         histograms['h_cos_theta1r_antilepton_mtt800toInf'].Fill(cos_theta1r_antilepton)
@@ -1620,6 +1806,10 @@ def process_event(entry, histograms):
         histograms['h_ld_trC_mtt800toInf'].Fill(ld_trC)
         histograms['h_ld_cHel_mtt800toInf'].Fill(ld_cHel)
         histograms['h_ld_cHel_P3n_mtt800toInf'].Fill(ld_cHel_P3n)
+        histograms['h_lb_sigmaPhi_mtt800toInf'].Fill(lb_sigmaPhi)
+        histograms['h_lb_deltaPhi_mtt800toInf'].Fill(lb_deltaPhi)
+        histograms['h_ld_sigmaPhi_mtt800toInf'].Fill(ld_sigmaPhi)
+        histograms['h_ld_deltaPhi_mtt800toInf'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.4:
             histograms['h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p4'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt800toInf_cosTSA_lt_0p4'].Fill(cos_theta1r_antilepton)
@@ -1675,6 +1865,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt800toInf_cosTSA_lt_0p4'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt800toInf_cosTSA_lt_0p4'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p4'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p4'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p4'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p4'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p4'].Fill(ld_deltaPhi)
         if abs(cosTSA) < 0.7:
             histograms['h_cos_theta1n_antilepton_mtt800toInf_cosTSA_lt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt800toInf_cosTSA_lt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1730,6 +1924,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt800toInf_cosTSA_lt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt800toInf_cosTSA_lt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt800toInf_cosTSA_lt_0p7'].Fill(ld_cHel_P3n)
+            histograms['h_lb_sigmaPhi_mtt800toInf_cosTSA_lt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt800toInf_cosTSA_lt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt800toInf_cosTSA_lt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt800toInf_cosTSA_lt_0p7'].Fill(ld_deltaPhi)
         if abs(cosTSA) > 0.7:
             histograms['h_cos_theta1n_antilepton_mtt800toInf_cosTSA_gt_0p7'].Fill(cos_theta1n_antilepton)
             histograms['h_cos_theta1r_antilepton_mtt800toInf_cosTSA_gt_0p7'].Fill(cos_theta1r_antilepton)
@@ -1785,7 +1983,10 @@ def process_event(entry, histograms):
             histograms['h_ld_trC_mtt800toInf_cosTSA_gt_0p7'].Fill(ld_trC)
             histograms['h_ld_cHel_mtt800toInf_cosTSA_gt_0p7'].Fill(ld_cHel)
             histograms['h_ld_cHel_P3n_mtt800toInf_cosTSA_gt_0p7'].Fill(ld_cHel_P3n)
-
+            histograms['h_lb_sigmaPhi_mtt800toInf_cosTSA_gt_0p7'].Fill(lb_sigmaPhi)
+            histograms['h_lb_deltaPhi_mtt800toInf_cosTSA_gt_0p7'].Fill(lb_deltaPhi)
+            histograms['h_ld_sigmaPhi_mtt800toInf_cosTSA_gt_0p7'].Fill(ld_sigmaPhi)
+            histograms['h_ld_deltaPhi_mtt800toInf_cosTSA_gt_0p7'].Fill(ld_deltaPhi)
        
     return tops, antitops, bottom_quarks, antibottom_quarks, hadronic_bottom_quarks, hadronic_antibottom_quarks, Wplus, Wminus, leptons, antiLeptons, neutrinos, antiNeutrinos, utype_quarks, antiUtype_quarks, dtype_quarks, antiDtype_quarks
 
