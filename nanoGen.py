@@ -597,29 +597,28 @@ def process_event(entry, histograms):
         hadronic_antibottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_antibottom_quark_dir.Dot(r_top), mRF_hadronic_antibottom_quark_dir.Dot(n_top))
         dtype_quark_phi =               ROOT.TMath.ATan2(         mRF_dtype_quark_4vec_dir.Dot(r_top),          mRF_dtype_quark_4vec_dir.Dot(n_top))
 
-        
-        lb_sigmaPhi = antiLepton_phi + hadronic_antibottom_quark_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
-        # keep sigmaPhi in the range [-pi, pi]
-        if lb_sigmaPhi > ROOT.TMath.Pi():
+        # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        lb_sigmaPhi = antiLepton_phi + hadronic_antibottom_quark_phi 
+        if lb_sigmaPhi > ROOT.TMath.Pi(): # keep sigmaPhi in the range [-pi, pi]
             lb_sigmaPhi -= 2*ROOT.TMath.Pi()
         elif lb_sigmaPhi < -ROOT.TMath.Pi():
             lb_sigmaPhi += 2*ROOT.TMath.Pi()
-        lb_deltaPhi = antiLepton_phi - hadronic_antibottom_quark_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
-        # keep deltaPhi in the range [-pi, pi]
-        if lb_deltaPhi > ROOT.TMath.Pi():
+        # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        lb_deltaPhi = antiLepton_phi - hadronic_antibottom_quark_phi 
+        if lb_deltaPhi > ROOT.TMath.Pi(): # keep deltaPhi in the range [-pi, pi]
             lb_deltaPhi -= 2*ROOT.TMath.Pi()
         elif lb_deltaPhi < -ROOT.TMath.Pi():
             lb_deltaPhi += 2*ROOT.TMath.Pi()
-        
-        ld_sigmaPhi = antiLepton_phi + dtype_quark_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
-        # keep sigmaPhi in the range [-pi, pi]
-        if ld_sigmaPhi > ROOT.TMath.Pi():
+            
+        # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        ld_sigmaPhi = antiLepton_phi + dtype_quark_phi 
+        if ld_sigmaPhi > ROOT.TMath.Pi(): # keep sigmaPhi in the range [-pi, pi]
             ld_sigmaPhi -= 2*ROOT.TMath.Pi()
         elif ld_sigmaPhi < -ROOT.TMath.Pi():
             ld_sigmaPhi += 2*ROOT.TMath.Pi()
-        ld_deltaPhi = antiLepton_phi - dtype_quark_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
-        # keep deltaPhi in the range [-pi, pi]
-        if ld_deltaPhi > ROOT.TMath.Pi():
+        # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        ld_deltaPhi = antiLepton_phi - dtype_quark_phi 
+        if ld_deltaPhi > ROOT.TMath.Pi(): # keep deltaPhi in the range [-pi, pi]
             ld_deltaPhi -= 2*ROOT.TMath.Pi()
         elif ld_deltaPhi < -ROOT.TMath.Pi():
             ld_deltaPhi += 2*ROOT.TMath.Pi()
@@ -682,15 +681,15 @@ def process_event(entry, histograms):
         elif lb_deltaPhi < -ROOT.TMath.Pi():
             lb_deltaPhi += 2*ROOT.TMath.Pi()
 
-        ld_sigmaPhi = antiDtype_quark_phi + lepton_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
-        # keep sigmaPhi in the range [-pi, pi]
-        if ld_sigmaPhi > ROOT.TMath.Pi():
+        # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        ld_sigmaPhi = antiDtype_quark_phi + lepton_phi 
+        if ld_sigmaPhi > ROOT.TMath.Pi(): # keep sigmaPhi in the range [-pi, pi]
             ld_sigmaPhi -= 2*ROOT.TMath.Pi()
         elif ld_sigmaPhi < -ROOT.TMath.Pi():
             ld_sigmaPhi += 2*ROOT.TMath.Pi()
-        ld_deltaPhi = antiDtype_quark_phi - lepton_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
-        # keep deltaPhi in the range [-pi, pi]
-        if ld_deltaPhi > ROOT.TMath.Pi():
+        # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        ld_deltaPhi = antiDtype_quark_phi - lepton_phi 
+        if ld_deltaPhi > ROOT.TMath.Pi(): # keep deltaPhi in the range [-pi, pi]
             ld_deltaPhi -= 2*ROOT.TMath.Pi()
         elif ld_deltaPhi < -ROOT.TMath.Pi():
             ld_deltaPhi += 2*ROOT.TMath.Pi()
