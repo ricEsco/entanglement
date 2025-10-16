@@ -156,10 +156,10 @@ def process_event(entry, histograms):
     k_top = ROOT.TVector3()
     r_top = ROOT.TVector3()
     n_top = ROOT.TVector3()
-    # antitop quark reference axes
-    k_antitop = ROOT.TVector3()
-    r_antitop = ROOT.TVector3()
-    n_antitop = ROOT.TVector3()
+    # # antitop quark reference axes
+    # k_antitop = ROOT.TVector3()
+    # r_antitop = ROOT.TVector3()
+    # n_antitop = ROOT.TVector3()
 
     # lepton exclusive polarization variables
     cos_theta1k_antilepton = float('nan')
@@ -482,6 +482,7 @@ def process_event(entry, histograms):
         # top antiquark decay product
         lepton_4vec.Boost(-ttbar_4vec.BoostVector())
 
+
     ###############################
     ### build Bernreuther basis ###
     ###############################
@@ -502,15 +503,6 @@ def process_event(entry, histograms):
     ### CA-polarization axes
     kStar_top = (1.0 if deltaAbsY >= 0 else -1.0) * k_axis
     rStar_top = (1.0 if deltaAbsY >= 0 else -1.0) * (1.0 if cosTSA >= 0 else -1.0) * r_axis
-
-    ### antitop quark reference axes ###
-    ####################################
-    k_antitop = -1.0 * k_axis
-    r_antitop = -1.0 * (1.0 if cosTSA >= 0 else -1.0) * r_axis
-    n_antitop = -1.0 * (1.0 if cosTSA >= 0 else -1.0) * n_axis
-    ### CA-polarization axes
-    kStar_antitop = -1.0 * (1.0 if deltaAbsY >= 0 else -1.0) * k_axis
-    rStar_antitop = -1.0 * (1.0 if deltaAbsY >= 0 else -1.0) * (1.0 if cosTSA >= 0 else -1.0) * r_axis
 
 
     ### Boost decay products to their motherTop's REST FRAME ###
@@ -538,6 +530,7 @@ def process_event(entry, histograms):
         mRF_lepton_4vec_dir = lepton_4vec.Vect().Unit()
 
 
+    ##################################
     ### Spin correlation variables ###
     ##################################
     # LEPTON Exclusive polarization variables
@@ -548,14 +541,16 @@ def process_event(entry, histograms):
         cos_theta1kStar_antilepton = mRF_antiLepton_dir.Dot(kStar_top)
         cos_theta1rStar_antilepton = mRF_antiLepton_dir.Dot(rStar_top)
     elif has_hadronic_top_decay:
-        cos_theta2k_lepton =     mRF_lepton_4vec_dir.Dot(k_antitop)
-        cos_theta2r_lepton =     mRF_lepton_4vec_dir.Dot(r_antitop)
-        cos_theta2n_lepton =     mRF_lepton_4vec_dir.Dot(n_antitop)
-        cos_theta2kStar_lepton = mRF_lepton_4vec_dir.Dot(kStar_antitop)
-        cos_theta2rStar_lepton = mRF_lepton_4vec_dir.Dot(rStar_antitop)
+        cos_theta2k_lepton =     mRF_lepton_4vec_dir.Dot(k_top)
+        cos_theta2r_lepton =     mRF_lepton_4vec_dir.Dot(r_top)
+        cos_theta2n_lepton =     mRF_lepton_4vec_dir.Dot(n_top)
+        cos_theta2kStar_lepton = mRF_lepton_4vec_dir.Dot(kStar_top)
+        cos_theta2rStar_lepton = mRF_lepton_4vec_dir.Dot(rStar_top)
 
 
-    # Using leptons and (b- OR dType-quarks) as spin analyzers
+    # lb_ prefix for lepton and b-quark spin analyzers #
+    # ld_ prefix for lepton and d-quark spin analyzers #
+        
     ### leptonic-top scenario ###
     if has_hadronic_antiTop_decay: 
         ### Polarizations coefficients ###
@@ -573,17 +568,17 @@ def process_event(entry, histograms):
         ld_cos_theta1kStar = mRF_antiLepton_dir.Dot(kStar_top)
         ld_cos_theta1rStar = mRF_antiLepton_dir.Dot(rStar_top)
         # top antiquark decay products
-        lb_cos_theta2k =     mRF_hadronic_antibottom_quark_dir.Dot(k_antitop)
-        lb_cos_theta2r =     mRF_hadronic_antibottom_quark_dir.Dot(r_antitop)
-        lb_cos_theta2n =     mRF_hadronic_antibottom_quark_dir.Dot(n_antitop)
-        lb_cos_theta2kStar = mRF_hadronic_antibottom_quark_dir.Dot(kStar_antitop)
-        lb_cos_theta2rStar = mRF_hadronic_antibottom_quark_dir.Dot(rStar_antitop)
+        lb_cos_theta2k =     mRF_hadronic_antibottom_quark_dir.Dot(k_top)
+        lb_cos_theta2r =     mRF_hadronic_antibottom_quark_dir.Dot(r_top)
+        lb_cos_theta2n =     mRF_hadronic_antibottom_quark_dir.Dot(n_top)
+        lb_cos_theta2kStar = mRF_hadronic_antibottom_quark_dir.Dot(kStar_top)
+        lb_cos_theta2rStar = mRF_hadronic_antibottom_quark_dir.Dot(rStar_top)
 
-        ld_cos_theta2k =     mRF_dtype_quark_4vec_dir.Dot(k_antitop)
-        ld_cos_theta2r =     mRF_dtype_quark_4vec_dir.Dot(r_antitop)
-        ld_cos_theta2n =     mRF_dtype_quark_4vec_dir.Dot(n_antitop)
-        ld_cos_theta2kStar = mRF_dtype_quark_4vec_dir.Dot(kStar_antitop)
-        ld_cos_theta2rStar = mRF_dtype_quark_4vec_dir.Dot(rStar_antitop)
+        ld_cos_theta2k =     mRF_dtype_quark_4vec_dir.Dot(k_top)
+        ld_cos_theta2r =     mRF_dtype_quark_4vec_dir.Dot(r_top)
+        ld_cos_theta2n =     mRF_dtype_quark_4vec_dir.Dot(n_top)
+        ld_cos_theta2kStar = mRF_dtype_quark_4vec_dir.Dot(kStar_top)
+        ld_cos_theta2rStar = mRF_dtype_quark_4vec_dir.Dot(rStar_top)
 
         ### Entanglement variables ###
         ##############################
@@ -594,18 +589,14 @@ def process_event(entry, histograms):
         ld_cHel_P3n = ld_cos_theta1k*ld_cos_theta2k + ld_cos_theta1r*ld_cos_theta2r - ld_cos_theta1n*ld_cos_theta2n
 
 
-        ### Baumgart&Tweedie variables ONLY USE TOP QUARK REFERENCE AXES ###
-        ####################################################################
-        # ATan2 syntax is ATan2(y,x) #
-        # mapping Bernreuther basis to {x,y,z} depends on scattering angle #
-        if cosTSA >= 0: # top quark in forward hemisphere means {x,y,z} = {n,r,k}
-            antiLepton_phi =                ROOT.TMath.ATan2(               mRF_antiLepton_dir.Dot(r_top),                mRF_antiLepton_dir.Dot(n_top))
-            hadronic_antibottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_antibottom_quark_dir.Dot(r_top), mRF_hadronic_antibottom_quark_dir.Dot(n_top))
-            dtype_quark_phi =               ROOT.TMath.ATan2(         mRF_dtype_quark_4vec_dir.Dot(r_top),          mRF_dtype_quark_4vec_dir.Dot(n_top))
-        else: # top quark in backward hemisphere means {x,y,z} = {r,n,k}
-            antiLepton_phi =                ROOT.TMath.ATan2(               mRF_antiLepton_dir.Dot(n_top),                mRF_antiLepton_dir.Dot(r_top))
-            hadronic_antibottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_antibottom_quark_dir.Dot(n_top), mRF_hadronic_antibottom_quark_dir.Dot(r_top))
-            dtype_quark_phi =               ROOT.TMath.ATan2(         mRF_dtype_quark_4vec_dir.Dot(n_top),          mRF_dtype_quark_4vec_dir.Dot(r_top))
+        ### Baumgart&Tweedie variables ###
+        ##################################
+        # ATan2 syntax is ATan2(y,x) and returns azimuthal angle [-pi, pi]
+        # Mapping between Baumgart and Bernreuther bases: {n,r}.Rotate(-1*TMath.Pi/2, k) = {x,y}
+        antiLepton_phi =                ROOT.TMath.ATan2(               mRF_antiLepton_dir.Dot(r_top),                mRF_antiLepton_dir.Dot(n_top))
+        hadronic_antibottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_antibottom_quark_dir.Dot(r_top), mRF_hadronic_antibottom_quark_dir.Dot(n_top))
+        dtype_quark_phi =               ROOT.TMath.ATan2(         mRF_dtype_quark_4vec_dir.Dot(r_top),          mRF_dtype_quark_4vec_dir.Dot(n_top))
+
         
         lb_sigmaPhi = antiLepton_phi + hadronic_antibottom_quark_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
         # keep sigmaPhi in the range [-pi, pi]
@@ -638,17 +629,17 @@ def process_event(entry, histograms):
         ### Polarizations coefficients ###
         ##################################
         # top quark decay products
-        lb_cos_theta1k = mRF_hadronic_bottom_quark_dir.Dot(k_antitop)
-        lb_cos_theta1r = mRF_hadronic_bottom_quark_dir.Dot(r_antitop)
-        lb_cos_theta1n = mRF_hadronic_bottom_quark_dir.Dot(n_antitop)
-        lb_cos_theta1kStar = mRF_hadronic_bottom_quark_dir.Dot(kStar_antitop)
-        lb_cos_theta1rStar = mRF_hadronic_bottom_quark_dir.Dot(rStar_antitop)
+        lb_cos_theta1k = mRF_hadronic_bottom_quark_dir.Dot(k_top)
+        lb_cos_theta1r = mRF_hadronic_bottom_quark_dir.Dot(r_top)
+        lb_cos_theta1n = mRF_hadronic_bottom_quark_dir.Dot(n_top)
+        lb_cos_theta1kStar = mRF_hadronic_bottom_quark_dir.Dot(kStar_top)
+        lb_cos_theta1rStar = mRF_hadronic_bottom_quark_dir.Dot(rStar_top)
 
-        ld_cos_theta1k = mRF_antiDtype_quark_4vec_dir.Dot(k_antitop)
-        ld_cos_theta1r = mRF_antiDtype_quark_4vec_dir.Dot(r_antitop)
-        ld_cos_theta1n = mRF_antiDtype_quark_4vec_dir.Dot(n_antitop)
-        ld_cos_theta1kStar = mRF_antiDtype_quark_4vec_dir.Dot(kStar_antitop)
-        ld_cos_theta1rStar = mRF_antiDtype_quark_4vec_dir.Dot(rStar_antitop)
+        ld_cos_theta1k = mRF_antiDtype_quark_4vec_dir.Dot(k_top)
+        ld_cos_theta1r = mRF_antiDtype_quark_4vec_dir.Dot(r_top)
+        ld_cos_theta1n = mRF_antiDtype_quark_4vec_dir.Dot(n_top)
+        ld_cos_theta1kStar = mRF_antiDtype_quark_4vec_dir.Dot(kStar_top)
+        ld_cos_theta1rStar = mRF_antiDtype_quark_4vec_dir.Dot(rStar_top)
         # top antiquark decay products
         lb_cos_theta2k = mRF_lepton_4vec_dir.Dot(k_top)
         lb_cos_theta2r = mRF_lepton_4vec_dir.Dot(r_top)
@@ -670,27 +661,23 @@ def process_event(entry, histograms):
         ld_cHel_P3n = ld_cos_theta1k*ld_cos_theta2k + ld_cos_theta1r*ld_cos_theta2r - ld_cos_theta1n*ld_cos_theta2n
 
 
-        ### Baumgart&Tweedie variables ONLY USE TOP QUARK REFERENCE AXES ###
-        ####################################################################
-        # ATan2(y,x) {x,y,z} -> {n,r,k} depends on sign of scattering angle #
-        if cosTSA >= 0: # top quark in forward hemisphere means {x,y,z} = {n,r,k}
-            hadronic_bottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_bottom_quark_dir.Dot(r_top), mRF_hadronic_bottom_quark_dir.Dot(n_top))
-            antiDtype_quark_phi =       ROOT.TMath.ATan2( mRF_antiDtype_quark_4vec_dir.Dot(r_top),  mRF_antiDtype_quark_4vec_dir.Dot(n_top))
-            lepton_phi =                ROOT.TMath.ATan2(          mRF_lepton_4vec_dir.Dot(r_top),           mRF_lepton_4vec_dir.Dot(n_top))
-        else: # top quark in backward hemisphere means {x,y,z} = {r,n,k}
-            hadronic_bottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_bottom_quark_dir.Dot(n_top), mRF_hadronic_bottom_quark_dir.Dot(r_top))
-            antiDtype_quark_phi =       ROOT.TMath.ATan2( mRF_antiDtype_quark_4vec_dir.Dot(n_top),  mRF_antiDtype_quark_4vec_dir.Dot(r_top))
-            lepton_phi =                ROOT.TMath.ATan2(          mRF_lepton_4vec_dir.Dot(n_top),           mRF_lepton_4vec_dir.Dot(r_top))
+        ### Baumgart&Tweedie variables ###
+        ##################################
+        # ATan2 syntax is ATan2(y,x) and returns azimuthal angle [-pi, pi]
+        # Mapping between Baumgart and Bernreuther bases: {n,r}.Rotate(-1*TMath.Pi/2, k) = {x,y}
+        hadronic_bottom_quark_phi = ROOT.TMath.ATan2(mRF_hadronic_bottom_quark_dir.Dot(r_top), mRF_hadronic_bottom_quark_dir.Dot(n_top))
+        antiDtype_quark_phi =       ROOT.TMath.ATan2( mRF_antiDtype_quark_4vec_dir.Dot(r_top),  mRF_antiDtype_quark_4vec_dir.Dot(n_top))
+        lepton_phi =                ROOT.TMath.ATan2(          mRF_lepton_4vec_dir.Dot(r_top),           mRF_lepton_4vec_dir.Dot(n_top))
         
-        lb_sigmaPhi = hadronic_bottom_quark_phi + lepton_phi # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
-        # keep sigmaPhi in the range [-pi, pi]
-        if lb_sigmaPhi > ROOT.TMath.Pi():
+        # sigmaPhi = phi_topDecayProduct + phi_antitopDecayProduct
+        lb_sigmaPhi = hadronic_bottom_quark_phi + lepton_phi 
+        if lb_sigmaPhi > ROOT.TMath.Pi(): # keep sigmaPhi in the range [-pi, pi]
             lb_sigmaPhi -= 2*ROOT.TMath.Pi()
         elif lb_sigmaPhi < -ROOT.TMath.Pi():
             lb_sigmaPhi += 2*ROOT.TMath.Pi()
-        lb_deltaPhi = hadronic_bottom_quark_phi - lepton_phi # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
-        # keep deltaPhi in the range [-pi, pi]
-        if lb_deltaPhi > ROOT.TMath.Pi():
+        # deltaPhi = phi_topDecayProduct - phi_antitopDecayProduct
+        lb_deltaPhi = hadronic_bottom_quark_phi - lepton_phi 
+        if lb_deltaPhi > ROOT.TMath.Pi(): # keep deltaPhi in the range [-pi, pi]
             lb_deltaPhi -= 2*ROOT.TMath.Pi()
         elif lb_deltaPhi < -ROOT.TMath.Pi():
             lb_deltaPhi += 2*ROOT.TMath.Pi()
